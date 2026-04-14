@@ -349,3 +349,32 @@ def parse_regions(region_string: str) -> List[Tuple[int, int]]:
             raise ValueError(f"Invalid region format: {region}. Start and end must be integers.")
     
     return regions
+
+def read_fasta(fasta_file: str) -> str:
+    """
+    Read sequence from FASTA file (takes first sequence)
+    
+    Args:
+        fasta_file: Path to FASTA file
+        
+    Returns:
+        Protein sequence string
+    """
+    try:
+        with open(fasta_file, 'r') as f:
+            sequence = ""
+            for line in f:
+                line = line.strip()
+                if line.startswith('>'):
+                    if sequence:  # If we already have a sequence, break (take first one)
+                        break
+                    continue
+                sequence += line
+            
+            if not sequence:
+                raise ValueError("No sequence found in FASTA file")
+                
+            return sequence
+            
+    except FileNotFoundError:
+        raise FileNotFoundError(f"FASTA file not found: {fasta_file}")
