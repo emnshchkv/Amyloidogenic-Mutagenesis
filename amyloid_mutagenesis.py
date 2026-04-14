@@ -324,3 +324,28 @@ class AmyloidMutagenesis:
         except Exception as e:
             print(f"Error writing FASTA file: {e}")
             sys.exit(1)
+
+def parse_regions(region_string: str) -> List[Tuple[int, int]]:
+    """
+    Parse region string into list of (start, end) tuples
+    
+    Args:
+        region_string: String like "1:5,15:20,30:35"
+        
+    Returns:
+        List of (start, end) tuples
+    """
+    regions = []
+    
+    for region in region_string.split(','):
+        region = region.strip()
+        if ':' not in region:
+            raise ValueError(f"Invalid region format: {region}. Use start:end format.")
+        
+        try:
+            start, end = map(int, region.split(':'))
+            regions.append((start, end))
+        except ValueError:
+            raise ValueError(f"Invalid region format: {region}. Start and end must be integers.")
+    
+    return regions
