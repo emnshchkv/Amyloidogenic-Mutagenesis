@@ -325,6 +325,7 @@ class AmyloidMutagenesis:
             print(f"Error writing FASTA file: {e}")
             sys.exit(1)
 
+
 def parse_regions(region_string: str) -> List[Tuple[int, int]]:
     """
     Parse region string into list of (start, end) tuples
@@ -349,6 +350,7 @@ def parse_regions(region_string: str) -> List[Tuple[int, int]]:
             raise ValueError(f"Invalid region format: {region}. Start and end must be integers.")
     
     return regions
+
 
 def read_fasta(fasta_file: str) -> str:
     """
@@ -378,3 +380,88 @@ def read_fasta(fasta_file: str) -> str:
             
     except FileNotFoundError:
         raise FileNotFoundError(f"FASTA file not found: {fasta_file}")
+
+
+def main():
+    """Main function"""
+    parser = argparse.ArgumentParser(
+        description="Amyloidogenic Mutagenesis Script - Generate mutations to reduce amyloid formation potential",
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog="""
+                    Examples:
+                    # Using a sequence string
+                    python amyloid_mutagenesis.py --sequence "MKVLIVLLIPLASAPTVIGVK" --region "5:10,15:20" --output mutations.fasta
+                    
+                    # Using a FASTA file
+                    python amyloid_mutagenesis.py --fasta protein.fasta --region "1:50" --output mutations.fasta
+                    
+                    # Custom mutation types
+                    python amyloid_mutagenesis.py --fasta protein.fasta --region "1:50" --output mutations.fasta \\
+                                                    --no-dipeptides --max-combinations 2
+                    """
+    )
+    
+    # Input options (mutually exclusive)
+    input_group = parser.add_mutually_exclusive_group(required=True)
+    input_group.add_argument('--sequence', '-s', type=str,
+                            help='Protein sequence as string')
+    input_group.add_argument('--fasta', '-f', type=str,
+                            help='Path to FASTA file containing protein sequence')
+    
+    # Required arguments
+    parser.add_argument('--region', '-r', type=str, required=True,
+                       help='Regions of interest (format: "start:end,start:end") - 1-indexed')
+    parser.add_argument('--output', '-o', type=str, required=True,
+                       help='Output FASTA file path')
+    
+    # Optional mutation control
+    parser.add_argument('--no-single', action='store_true',
+                       help='Exclude single amino acid mutations')
+    parser.add_argument('--no-dipeptides', action='store_true',
+                       help='Exclude dipeptide insertions')
+    parser.add_argument('--no-pentapeptides', action='store_true',
+                       help='Exclude pentapeptide insertions')
+    parser.add_argument('--no-combinatorial', action='store_true',
+                       help='Exclude combinatorial mutations')
+    parser.add_argument('--no-fixed', action='store_true',
+                       help='Exclude fixed combination mutations')
+    parser.add_argument('--max-combinations', type=int, default=3,
+                       help='Maximum number of simultaneous mutations (default: 3)')
+    
+    args = parser.parse_args()
+    
+    try:
+        regions = parse_regions(args.region)
+        print(f"Parsed regions: {regions}")
+        
+        if args.sequence:
+            sequence = args.sequence
+            print("Using provided sequence string")
+        else:
+            sequence = read_fasta(args.fasta)
+            print(f"Read sequence from {args.fasta}")
+        
+        mutagenesis = AmyloidMutagenesis(sequence, regions, args.output)
+        
+        mutagenesis.run_mutagenesis(
+            include_single=not args.no_single,
+            include_dipeptides=not args.no_dipeptides,
+            include_pentapeptides=not args.no_pentapeptides,
+            include_combinatorial=not args.no_combinatorial,
+            include_fixed=not args.no_fixed,
+            max_combinations=args.max_combinations
+        )
+        
+        mutagenesis.write_fasta()
+        
+        print(f"\nAmyloidogenic mutagenesis completed successfully!")
+        print(f"Total mutants generated: {len(mutagenesis.mutations)}")
+        print(f"Results saved to: {args.output}")
+        
+    except Exception as e:
+        print(f"Error: {e}", file=sys.stderr)
+        sys.exit(1)
+
+
+if __name__ == "__main__":
+    main()
