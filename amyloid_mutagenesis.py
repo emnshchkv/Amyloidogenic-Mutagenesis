@@ -934,8 +934,8 @@ def main():
         "--log",
         "-l",
         type=str,
-        required=True,
-        help="Path to log file (all details written here)",
+        default="amyloid_mutagenesis.log",
+        help="Path to log file (default: amyloid_mutagenesis.log)",
     )
     parser.add_argument(
         "--verbose",
