@@ -83,7 +83,7 @@ python amyloid_mutagenesis.py \
 ```bash
 # Analyze the amyloid-β peptide
 python amyloid_mutagenesis.py \
-  --sequence test_protein_Abeta42.fasta \
+  --sequence "MKVLIVLLIPLASAPTVIGVK" \
   --region "17:21,30:42" \
   --output Abeta42_mutations.fasta
 ```
@@ -110,10 +110,33 @@ The script generates a FASTA file containing:
 
 ## Performance Notes
 
-- Single mutations: 2 х number of enhancers
-- Dipeptide insertions: 2 х number of enhancers  
-- Pentapeptide insertions: 2 х number of enhancers
+- Single mutations: 2 × number of enhancers
+- Dipeptide insertions: 2 × number of enhancers  
+- Pentapeptide insertions: 2 × number of enhancers
 - Combinatorial: Exponential with max_combinations setting
 - Total mutations can be large for proteins with many enhancers
 
 Use `--max-combinations 2` for large proteins to limit output size.
+
+## Logging
+
+The script generates a detailed log file (`amyloid_mutagenesis.log` by default) containing:
+- Sequence and region validation details
+- Enhancer detection results
+- Mutation generation statistics
+- Performance metrics
+- Any warnings or errors encountered
+
+Use `--log` to specify a custom log file path and `--verbose` for debug-level console output.
+
+## Error Handling
+
+The script includes comprehensive error handling with specific exit codes:
+- Exit code 2: Sequence validation error
+- Exit code 3: Region validation error
+- Exit code 4: FASTA file reading error
+- Exit code 5: Output file writing error
+- Exit code 6: Argument validation error
+- Exit code 7: General mutagenesis error
+- Exit code 130: Script interrupted by user (Ctrl+C)
+- Exit code 1: Unexpected error
