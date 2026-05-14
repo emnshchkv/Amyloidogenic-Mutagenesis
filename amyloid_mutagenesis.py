@@ -296,7 +296,7 @@ class AmyloidMutagenesis:
 
         return mutations
 
-    def generate_dipeptide_insertions(
+    def generate_dipeptide_replacements(
         self, enhancers: Dict[int, str]
     ) -> List[Tuple[str, str]]:
         """
@@ -342,12 +342,12 @@ class AmyloidMutagenesis:
                 )
 
         except Exception as e:
-            self.logger.error(f"Fatal error in generate_dipeptide_insertions: {e}")
+            self.logger.error(f"Fatal error in generate_dipeptide_replacements: {e}")
             raise
 
         return mutations
 
-    def generate_pentapeptide_insertions(
+    def generate_pentapeptide_replacements(
         self, enhancers: Dict[int, str]
     ) -> List[Tuple[str, str]]:
         """
@@ -393,7 +393,7 @@ class AmyloidMutagenesis:
                 )
 
         except Exception as e:
-            self.logger.error(f"Fatal error in generate_pentapeptide_insertions: {e}")
+            self.logger.error(f"Fatal error in generate_pentapeptide_replacements: {e}")
             raise
 
         return mutations
@@ -479,6 +479,15 @@ class AmyloidMutagenesis:
                 self.logger.info(
                     f"Successfully generated {len(mutations)} combinatorial mutations"
                 )
+            
+            # Warning if combinatorial mutations exceed threshold
+            if len(mutations) > 500:
+                warning_msg = (
+                    f"⚠️  WARNING: Generated {len(mutations)} combinatorial mutations! "
+                    f"Consider reducing --max-combinations parameter to limit output size."
+                )
+                self.logger.warning(warning_msg)
+                print(warning_msg, file=sys.stderr)
 
         except Exception as e:
             self.logger.error(f"Fatal error in generate_combinatorial_mutations: {e}")
@@ -624,12 +633,12 @@ class AmyloidMutagenesis:
                 mutation_stages.append(f"Single mutations: {len(single_muts)}")
 
             if include_dipeptides:
-                dipeptide_muts = self.generate_dipeptide_insertions(enhancers)
+                dipeptide_muts = self.generate_dipeptide_replacements(enhancers)
                 self.mutations.extend(dipeptide_muts)
                 mutation_stages.append(f"Dipeptide insertions: {len(dipeptide_muts)}")
 
             if include_pentapeptides:
-                pentapeptide_muts = self.generate_pentapeptide_insertions(enhancers)
+                pentapeptide_muts = self.generate_pentapeptide_replacements(enhancers)
                 self.mutations.extend(pentapeptide_muts)
                 mutation_stages.append(
                     f"Pentapeptide insertions: {len(pentapeptide_muts)}"
@@ -652,6 +661,16 @@ class AmyloidMutagenesis:
                 self.logger.info(f"  - {stage}")
 
             self.logger.info(f"Total mutations generated: {len(self.mutations)}")
+            
+            # Warning if total mutations exceed threshold
+            if len(self.mutations) > 500:
+                warning_msg = (
+                    f"⚠️  WARNING: Generated {len(self.mutations)} total mutations! "
+                    f"This may result in a large output file. Consider adjusting mutation parameters."
+                )
+                self.logger.warning(warning_msg)
+                print(warning_msg, file=sys.stderr)
+            
             self.logger.info("=" * 70)
 
         except Exception as e:
