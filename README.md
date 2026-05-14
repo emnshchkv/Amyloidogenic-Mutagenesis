@@ -113,10 +113,30 @@ The script generates a FASTA file containing:
 - Single mutations: 2 × number of enhancers
 - Dipeptide insertions: 2 × number of enhancers  
 - Pentapeptide insertions: 2 × number of enhancers
-- Combinatorial: Exponential with max_combinations setting
+- Combinatorial: Exponential with max_combinations setting (exponential growth!)
+- Fixed combinations: 3 mutations (all to P, all to R, alternating P/R)
 - Total mutations can be large for proteins with many enhancers
 
-Use `--max-combinations 2` for large proteins to limit output size.
+### Mutation Count Warnings
+
+The script will **automatically warn you** in the following cases:
+
+1. **During combinatorial generation**: If > 500 combinatorial mutations are generated
+   - Message: "Consider reducing --max-combinations parameter to limit output size"
+   - Recommendation: Use `--max-combinations 2` for large proteins
+
+2. **At pipeline completion**: If total mutations > 500
+   - Message: "This may result in a large output file"
+   - Recommendation: Adjust mutation parameters or reduce region size
+
+### Impact of max_combinations on Output
+
+Example with 6 enhancers:
+- `--max-combinations 2`: ~96 combinatorial mutations
+- `--max-combinations 3`: ~512 combinatorial mutations (triggers warning!)
+- `--max-combinations 4`: ~1,536 combinatorial mutations (very large!)
+
+**Best Practice**: Start with `--max-combinations 2` and increase only if needed for your analysis.
 
 ## Logging
 
@@ -125,9 +145,21 @@ The script generates a detailed log file (`amyloid_mutagenesis.log` by default) 
 - Enhancer detection results
 - Mutation generation statistics
 - Performance metrics
+- **Warnings if mutations exceed 500** (when combinatorial generation is exponential)
 - Any warnings or errors encountered
 
 Use `--log` to specify a custom log file path and `--verbose` for debug-level console output.
+
+## Warning System
+
+The script includes built-in safeguards to prevent accidental generation of excessively large mutation libraries:
+
+| Situation | Threshold | Warning | Solution |
+|-----------|-----------|---------|----------|
+| Combinatorial mutations | > 500 | Displayed on stderr during generation | Reduce `--max-combinations` |
+| Total mutations | > 500 | Displayed on stderr at completion | Adjust all mutation parameters |
+
+Warnings are logged in the log file with full context for reproducibility.
 
 ## Error Handling
 
