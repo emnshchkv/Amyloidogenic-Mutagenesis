@@ -3,7 +3,7 @@ Amyloidogenic Mutagenesis Script
 
 This script performs targeted mutagenesis to reduce amyloidogenic potential by:
 1. Identifying enhancer amino acids (F, Y, W, V, L, I, Q, N, G) in specified regions
-2. Replacing them with beta-breaker amino acids or sequences (R, P, WY, WM, KLVFF, LPFFD)
+2. Replacing them with beta-breaker amino acids or sequences (R, P, WY, WM)
 3. Generating combinatorial mutations and outputting results to FASTA format
 
 """
@@ -113,7 +113,6 @@ class AmyloidMutagenesis:
     BETA_BREAKERS = {
         "single": ["R", "P"],
         "dipeptides": ["WY", "WM"],
-        "pentapeptides": ["KLVFF", "LPFFD"],
     }
 
     def __init__(
@@ -296,7 +295,7 @@ class AmyloidMutagenesis:
 
         return mutations
 
-    def generate_dipeptide_insertions(
+    def generate_dipeptide_replacements(
         self, enhancers: Dict[int, str]
     ) -> List[Tuple[str, str]]:
         """
@@ -342,58 +341,7 @@ class AmyloidMutagenesis:
                 )
 
         except Exception as e:
-            self.logger.error(f"Fatal error in generate_dipeptide_insertions: {e}")
-            raise
-
-        return mutations
-
-    def generate_pentapeptide_insertions(
-        self, enhancers: Dict[int, str]
-    ) -> List[Tuple[str, str]]:
-        """
-        Generate pentapeptide insertions at enhancer positions
-
-        Args:
-            enhancers: Dictionary of enhancer positions and amino acids
-
-        Returns:
-            List of (mutant_sequence, description) tuples
-        """
-        mutations = []
-        error_count = 0
-
-        try:
-            for pos, orig_aa in enhancers.items():
-                for pentapeptide in self.BETA_BREAKERS["pentapeptides"]:
-                    try:
-                        mutant_seq = (
-                            self.original_sequence[:pos]
-                            + pentapeptide
-                            + self.original_sequence[pos + 1 :]
-                        )
-
-                        description = f"{orig_aa}{pos+1}_{pentapeptide}"
-                        mutations.append((mutant_seq, description))
-                        self.logger.debug(
-                            f"Generated pentapeptide insertion: {description}"
-                        )
-                    except Exception as e:
-                        error_count += 1
-                        self.logger.error(
-                            f"Error generating pentapeptide insertion at position {pos+1}: {e}"
-                        )
-
-            if error_count > 0:
-                self.logger.warning(
-                    f"Generated {len(mutations)} pentapeptide insertions with {error_count} errors"
-                )
-            else:
-                self.logger.info(
-                    f"Successfully generated {len(mutations)} pentapeptide insertions"
-                )
-
-        except Exception as e:
-            self.logger.error(f"Fatal error in generate_pentapeptide_insertions: {e}")
+            self.logger.error(f"Fatal error in generate_dipeptide_replacements: {e}")
             raise
 
         return mutations
@@ -479,6 +427,15 @@ class AmyloidMutagenesis:
                 self.logger.info(
                     f"Successfully generated {len(mutations)} combinatorial mutations"
                 )
+            
+            # Warning if combinatorial mutations exceed threshold
+            if len(mutations) > 500:
+                warning_msg = (
+                    f"⚠️  WARNING: Generated {len(mutations)} combinatorial mutations! "
+                    f"Consider reducing --max-combinations parameter to limit output size."
+                )
+                self.logger.warning(warning_msg)
+                print(warning_msg, file=sys.stderr)
 
         except Exception as e:
             self.logger.error(f"Fatal error in generate_combinatorial_mutations: {e}")
@@ -580,7 +537,6 @@ class AmyloidMutagenesis:
         self,
         include_single: bool = True,
         include_dipeptides: bool = True,
-        include_pentapeptides: bool = True,
         include_combinatorial: bool = True,
         include_fixed: bool = True,
         max_combinations: int = 3,
@@ -591,7 +547,6 @@ class AmyloidMutagenesis:
         Args:
             include_single: Include single amino acid mutations
             include_dipeptides: Include dipeptide insertions
-            include_pentapeptides: Include pentapeptide insertions
             include_combinatorial: Include combinatorial mutations
             include_fixed: Include fixed combination mutations
             max_combinations: Maximum number of simultaneous mutations for combinatorial
@@ -624,16 +579,9 @@ class AmyloidMutagenesis:
                 mutation_stages.append(f"Single mutations: {len(single_muts)}")
 
             if include_dipeptides:
-                dipeptide_muts = self.generate_dipeptide_insertions(enhancers)
+                dipeptide_muts = self.generate_dipeptide_replacements(enhancers)
                 self.mutations.extend(dipeptide_muts)
                 mutation_stages.append(f"Dipeptide insertions: {len(dipeptide_muts)}")
-
-            if include_pentapeptides:
-                pentapeptide_muts = self.generate_pentapeptide_insertions(enhancers)
-                self.mutations.extend(pentapeptide_muts)
-                mutation_stages.append(
-                    f"Pentapeptide insertions: {len(pentapeptide_muts)}"
-                )
 
             if include_combinatorial and len(enhancers) > 1:
                 combo_muts = self.generate_combinatorial_mutations(
@@ -652,6 +600,16 @@ class AmyloidMutagenesis:
                 self.logger.info(f"  - {stage}")
 
             self.logger.info(f"Total mutations generated: {len(self.mutations)}")
+            
+            # Warning if total mutations exceed threshold
+            if len(self.mutations) > 500:
+                warning_msg = (
+                    f"⚠️  WARNING: Generated {len(self.mutations)} total mutations! "
+                    f"This may result in a large output file. Consider adjusting mutation parameters."
+                )
+                self.logger.warning(warning_msg)
+                print(warning_msg, file=sys.stderr)
+            
             self.logger.info("=" * 70)
 
         except Exception as e:
@@ -910,11 +868,6 @@ def main():
         "--no-dipeptides", action="store_true", help="Exclude dipeptide insertions"
     )
     parser.add_argument(
-        "--no-pentapeptides",
-        action="store_true",
-        help="Exclude pentapeptide insertions",
-    )
-    parser.add_argument(
         "--no-combinatorial",
         action="store_true",
         help="Exclude combinatorial mutations",
@@ -982,7 +935,6 @@ def main():
         mutagenesis.run_mutagenesis(
             include_single=not args.no_single,
             include_dipeptides=not args.no_dipeptides,
-            include_pentapeptides=not args.no_pentapeptides,
             include_combinatorial=not args.no_combinatorial,
             include_fixed=not args.no_fixed,
             max_combinations=args.max_combinations,

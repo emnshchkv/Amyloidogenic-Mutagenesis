@@ -10,7 +10,6 @@ This script performs targeted mutagenesis to reduce amyloidogenic potential by i
 - **Multiple Beta-Breaker Types**: 
   - Single amino acids: R, P
   - Dipeptides: WY, WM
-  - Pentapeptides: KLVFF, LPFFD
 - **Mutation Strategies**:
   - Single mutations (one enhancer at a time)
   - Combinatorial mutations (multiple enhancers simultaneously)
@@ -55,7 +54,6 @@ python amyloid_mutagenesis.py \
   --region "1:21" \
   --output mutations.fasta \
   --no-dipeptides \
-  --no-pentapeptides \
   --no-combinatorial
 ```
 
@@ -73,7 +71,6 @@ python amyloid_mutagenesis.py \
 
 - `--no-single`: Exclude single amino acid mutations
 - `--no-dipeptides`: Exclude dipeptide insertions  
-- `--no-pentapeptides`: Exclude pentapeptide insertions
 - `--no-combinatorial`: Exclude combinatorial mutations
 - `--no-fixed`: Exclude fixed combination mutations
 - `--max-combinations`: Maximum simultaneous mutations (default: 3)
@@ -95,9 +92,8 @@ The script generates a FASTA file containing:
 1. **Original Sequence**: The input sequence unchanged
 2. **Single Mutations**: Each enhancer replaced individually with R or P
 3. **Dipeptide Insertions**: Each enhancer replaced with WY or WM
-4. **Pentapeptide Insertions**: Each enhancer replaced with KLVFF or LPFFD
-5. **Combinatorial Mutations**: Multiple enhancers mutated simultaneously
-6. **Fixed Combinations**: All enhancers to P, all to R, or alternating P/R
+4. **Combinatorial Mutations**: Multiple enhancers mutated simultaneously
+5. **Fixed Combinations**: All enhancers to P, all to R, or alternating P/R
 
 ### FASTA Header Format
 
@@ -112,11 +108,30 @@ The script generates a FASTA file containing:
 
 - Single mutations: 2 × number of enhancers
 - Dipeptide insertions: 2 × number of enhancers  
-- Pentapeptide insertions: 2 × number of enhancers
-- Combinatorial: Exponential with max_combinations setting
+- Combinatorial: Exponential with max_combinations setting (exponential growth!)
+- Fixed combinations: 3 mutations (all to P, all to R, alternating P/R)
 - Total mutations can be large for proteins with many enhancers
 
-Use `--max-combinations 2` for large proteins to limit output size.
+### Mutation Count Warnings
+
+The script will **automatically warn you** in the following cases:
+
+1. **During combinatorial generation**: If > 500 combinatorial mutations are generated
+   - Message: "Consider reducing --max-combinations parameter to limit output size"
+   - Recommendation: Use `--max-combinations 2` for large proteins
+
+2. **At pipeline completion**: If total mutations > 500
+   - Message: "This may result in a large output file"
+   - Recommendation: Adjust mutation parameters or reduce region size
+
+### Impact of max_combinations on Output
+
+Example with 6 enhancers:
+- `--max-combinations 2`: ~96 combinatorial mutations
+- `--max-combinations 3`: ~512 combinatorial mutations (triggers warning!)
+- `--max-combinations 4`: ~1,536 combinatorial mutations (very large!)
+
+**Best Practice**: Start with `--max-combinations 2` and increase only if needed for your analysis.
 
 ## Logging
 
@@ -125,9 +140,21 @@ The script generates a detailed log file (`amyloid_mutagenesis.log` by default) 
 - Enhancer detection results
 - Mutation generation statistics
 - Performance metrics
+- **Warnings if mutations exceed 500** (when combinatorial generation is exponential)
 - Any warnings or errors encountered
 
 Use `--log` to specify a custom log file path and `--verbose` for debug-level console output.
+
+## Warning System
+
+The script includes built-in safeguards to prevent accidental generation of excessively large mutation libraries:
+
+| Situation | Threshold | Warning | Solution |
+|-----------|-----------|---------|----------|
+| Combinatorial mutations | > 500 | Displayed on stderr during generation | Reduce `--max-combinations` |
+| Total mutations | > 500 | Displayed on stderr at completion | Adjust all mutation parameters |
+
+Warnings are logged in the log file with full context for reproducibility.
 
 ## Error Handling
 
