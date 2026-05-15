@@ -10,7 +10,6 @@ This script performs targeted mutagenesis to reduce amyloidogenic potential by i
 - **Multiple Beta-Breaker Types**: 
   - Single amino acids: R, P
   - Dipeptides: WY, WM
-  - Pentapeptides: KLVFF, LPFFD
 - **Mutation Strategies**:
   - Single mutations (one enhancer at a time)
   - Combinatorial mutations (multiple enhancers simultaneously)
@@ -55,7 +54,6 @@ python amyloid_mutagenesis.py \
   --region "1:21" \
   --output mutations.fasta \
   --no-dipeptides \
-  --no-pentapeptides \
   --no-combinatorial
 ```
 
@@ -73,7 +71,6 @@ python amyloid_mutagenesis.py \
 
 - `--no-single`: Exclude single amino acid mutations
 - `--no-dipeptides`: Exclude dipeptide insertions  
-- `--no-pentapeptides`: Exclude pentapeptide insertions
 - `--no-combinatorial`: Exclude combinatorial mutations
 - `--no-fixed`: Exclude fixed combination mutations
 - `--max-combinations`: Maximum simultaneous mutations (default: 3)
@@ -95,9 +92,8 @@ The script generates a FASTA file containing:
 1. **Original Sequence**: The input sequence unchanged
 2. **Single Mutations**: Each enhancer replaced individually with R or P
 3. **Dipeptide Insertions**: Each enhancer replaced with WY or WM
-4. **Pentapeptide Insertions**: Each enhancer replaced with KLVFF or LPFFD
-5. **Combinatorial Mutations**: Multiple enhancers mutated simultaneously
-6. **Fixed Combinations**: All enhancers to P, all to R, or alternating P/R
+4. **Combinatorial Mutations**: Multiple enhancers mutated simultaneously
+5. **Fixed Combinations**: All enhancers to P, all to R, or alternating P/R
 
 ### FASTA Header Format
 
@@ -112,7 +108,6 @@ The script generates a FASTA file containing:
 
 - Single mutations: 2 × number of enhancers
 - Dipeptide insertions: 2 × number of enhancers  
-- Pentapeptide insertions: 2 × number of enhancers
 - Combinatorial: Exponential with max_combinations setting (exponential growth!)
 - Fixed combinations: 3 mutations (all to P, all to R, alternating P/R)
 - Total mutations can be large for proteins with many enhancers
