@@ -4,6 +4,28 @@
 
 ---
 
+## 0. GROMACS Installation
+
+Set up a conda environment with GROMACS 2026.0 (CPU-only, no MPI) using `mamba` for faster dependency resolution.
+
+```bash
+conda install -n base -c conda-forge mamba
+```
+
+Create a new environment and install GROMACS:
+
+```bash
+mamba create -n gromacs_cpu -c conda-forge python=3.12 "gromacs=2026.0=nompi*"
+```
+
+Activate the environment:
+
+```bash
+conda activate gromacs_cpu
+```
+
+---
+
 ## 1. System preparation: from PDB to topology
 
 ### Generating the topology with pdb2gmx
