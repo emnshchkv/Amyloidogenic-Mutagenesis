@@ -84,7 +84,7 @@ Representative VMD ribbon renders illustrate the conformational state of each pe
 
 #### F20L — 15 ns
 
-![F20L pentamer at 15 ns](images/f20l_15ns_w.png)
+![F20L pentamer at 15 ns](images/f20l_40ns.png)
 
 The F20L pentamer at 15 ns retains the characteristic parallel β-sheet arrangement of Aβ42 fibrils, with five strands aligned in register and the N-terminal region forming disordered loops. The overall fold is consistent with a stable fibril-like assembly, in agreement with the RMSD data showing minimal deviation from WT.
 
@@ -92,7 +92,7 @@ The F20L pentamer at 15 ns retains the characteristic parallel β-sheet arrangem
 
 | 90 ns | 150 ns |
 |:---:|:---:|
-| ![G33R at 90 ns](images/g33r_90ns_w.png) | ![G33R at 150 ns](images/g33r_150ns_w.png) |
+| ![G33R at 90 ns](images/g33r_90ns.png) | ![G33R at 150 ns](images/g33r_150ns.png) |
 
 At 90 ns, the G33R pentamer shows significant splaying of the C-terminal β-strands — the five monomers begin to lose their parallel register, rotating relative to each other. By 150 ns, the pentamer has adopted a markedly different conformation, with the β-sheet core partially unwound and the C-terminal strands forming a splayed fan-like arrangement. This progressive disorganisation is consistent with the broad, high-RMSD distribution seen in the RMSD analysis.
 
@@ -100,7 +100,7 @@ At 90 ns, the G33R pentamer shows significant splaying of the C-terminal β-stra
 
 | 130 ns | 150 ns |
 |:---:|:---:|
-| ![H14R at 130 ns](images/h14r_130ns_w.png) | ![H14R at 150 ns](images/h14r_150ns_w.png) |
+| ![H14R at 130 ns](images/h14r_130ns.png) | ![H14R at 150 ns](images/h14r_150ns.png) |
 
 At 130 ns, the H14R pentamer shows a more compact but twisted arrangement compared to WT, with the β-strands converging into a tighter bundle while the N-terminal loops become more ordered. By 150 ns, the structure has reorganised further — the two β-sheet layers (N-terminal and C-terminal) are shifting relative to each other, and several monomers show partial strand separation. The structural drift visible in these snapshots directly corresponds to the rising RMSD time series seen after ~140 ns.
 
