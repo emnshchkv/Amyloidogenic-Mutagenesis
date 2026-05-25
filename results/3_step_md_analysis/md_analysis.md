@@ -1,5 +1,8 @@
 # MD Analysis Pipeline — Step Documentation
 
+Full data is avaible at:
+https://drive.google.com/drive/folders/1QIL2TLIcyQhrr-qpx6V0-1W6LD2xOE7r?usp=sharing
+
 ---
 
 ## Step 1: Aβ42 Mutant Pentamer Analysis
