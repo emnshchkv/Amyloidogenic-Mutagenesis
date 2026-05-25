@@ -1,0 +1,84 @@
+; npt.mdp — NPT Equilibration (Aβ42)
+; ====================================
+; Purpose: Equilibrate system pressure and density after temperature
+; stabilization. The box volume adjusts to produce the correct density
+; (~1000 kg/m³) at 1 bar and 310 K. Position restraints remain active
+; to prevent peptide distortion during box rescaling.
+;
+; System: Aβ42 monomer, CHARMM36m / CHARMM-TIP3P / 150 mM NaCl
+; Duration: 500 ps (250,000 steps × 2 fs)
+; Ensemble: Isothermal-isobaric (NPT) — constant N, P, T
+;
+; IDP NOTE: For Aβ42, this NPT phase is particularly important because
+; the large box required for IDP simulations (~8-10 nm edge) contains
+; many more water molecules than a typical globular protein system.
+; The density must converge fully before releasing position restraints,
+; as density gradients cause artifactual forces on the peptide.
+
+; --- Run control ---
+define              = -DPOSRES
+integrator          = md
+dt                  = 0.002
+nsteps              = 80000     ; 100 ps — longer than typical globular protein
+                                 ; equilibration to ensure the large water box
+                                 ; reaches density convergence
+continuation        = yes        ; Continuing from NVT (do not regenerate velocities)
+
+; --- Output control ---
+nstxout-compressed  = 500
+nstenergy           = 500
+nstlog              = 500
+
+; --- Neighbor searching ---
+cutoff-scheme       = Verlet
+verlet-buffer-tolerance = 0.005
+nstlist             = 20
+pbc                 = xyz
+
+; --- Electrostatics (CHARMM36m — do not modify) ---
+coulombtype         = PME
+rcoulomb            = 1.2
+fourierspacing      = 0.12
+pme-order           = 4
+ewald-rtol          = 1e-5
+
+; --- Van der Waals (CHARMM36m — do not modify) ---
+vdwtype             = cutoff
+vdw-modifier        = force-switch
+rvdw                = 1.2
+rvdw-switch         = 1.0
+DispCorr            = no
+
+; --- Temperature coupling (same as NVT) ---
+tcoupl              = V-rescale
+tc-grps             = Protein Non-Protein
+tau_t               = 0.1   0.1
+ref_t               = 310   310
+
+; --- Pressure coupling ---
+; C-rescale (stochastic cell rescaling, Bernetti & Bussi, JCP 2020):
+; Adds a stochastic noise term to Berendsen-like isotropic rescaling,
+; producing correct NPT volume fluctuations while maintaining robust
+; convergence from far-from-equilibrium initial conditions.
+; Preferred over Berendsen (wrong ensemble) for equilibration, and over
+; Parrinello-Rahman (unstable far from equilibrium) for this phase.
+;
+; For GROMACS versions < 2021 that lack C-rescale, use:
+;   pcoupl = Berendsen  (equilibration only, switch to P-R for production)
+pcoupl              = C-rescale
+pcoupltype          = isotropic  ; Uniform scaling in all directions
+tau_p               = 5.0        ; Pressure relaxation time (ps)
+ref_p               = 1.0        ; Target pressure: 1 bar
+compressibility     = 4.5e-5     ; Isothermal compressibility of water (bar⁻¹)
+refcoord-scaling    = com        ; Scale position restraint references with
+                                 ; center-of-mass motion to prevent drift
+                                 ; as box dimensions change
+
+; --- Velocity ---
+gen_vel             = no         ; Continue with NVT velocities
+
+; --- Bond constraints ---
+constraint_algorithm = LINCS
+constraints         = h-bonds
+lincs_iter          = 1
+lincs_order         = 4

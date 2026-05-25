@@ -1,0 +1,82 @@
+; nvt.mdp — NVT Equilibration (Aβ42)
+; ====================================
+; Purpose: Equilibrate system temperature at 310 K (37°C, physiological)
+; while position-restraining the peptide heavy atoms. This allows the
+; solvent shell and ions to relax around the peptide geometry without
+; disturbing the initial conformation.
+;
+; System: Aβ42 monomer, CHARMM36m / CHARMM-TIP3P / 150 mM NaCl
+; Duration: 100 ps (50,000 steps × 2 fs)
+; Ensemble: Canonical (NVT) — constant N, V, T
+;
+; BIOLOGICAL CONTEXT: Aβ42 is an intrinsically disordered peptide.
+; Position restraints during NVT prevent premature unfolding of the
+; NMR-derived starting structure (1IYT) before the solvent is properly
+; thermalized. The restraint force constant (1000 kJ/mol/nm²) is strong
+; enough to hold heavy atoms in place while allowing thermal fluctuations.
+
+; --- Run control ---
+define              = -DPOSRES   ; Include position restraints from posre.itp
+integrator          = md         ; Leap-frog Verlet integrator
+dt                  = 0.002      ; 2 fs timestep (requires H-bond constraints)
+nsteps              = 10000      ; 100 ps total simulation time
+continuation        = no         ; First dynamics run (generates velocities)
+
+; --- Output control ---
+nstxout-compressed  = 500        ; Compressed coordinates every 1 ps
+nstenergy           = 500        ; Energy data every 1 ps
+nstlog              = 500        ; Log output every 1 ps
+
+; --- Neighbor searching ---
+cutoff-scheme       = Verlet
+verlet-buffer-tolerance = 0.005
+nstlist             = 20         ; Update pair list every 40 fs
+                                 ; Verlet buffer auto-adjusts rlist for energy drift
+pbc                 = xyz
+
+; --- Electrostatics (CHARMM36m — do not modify) ---
+coulombtype         = PME
+rcoulomb            = 1.2
+fourierspacing      = 0.12
+pme-order           = 4
+ewald-rtol          = 1e-5
+
+; --- Van der Waals (CHARMM36m — do not modify) ---
+vdwtype             = cutoff
+vdw-modifier        = force-switch
+rvdw                = 1.2
+rvdw-switch         = 1.0
+DispCorr            = no
+
+; --- Temperature coupling ---
+; V-rescale (Bussi-Donadio-Parrinello, JCP 2007): stochastic velocity
+; rescaling that produces correct canonical kinetic energy distribution.
+; Unlike Berendsen (which suppresses fluctuations), V-rescale adds a
+; noise term: dK = (K0-K)dt/τ + 2√(KK0/Nf) dW/√τ
+; This gives correct Maxwell-Boltzmann velocities AND fast convergence.
+;
+; Two coupling groups prevent the "hot solvent–cold solute" artifact:
+; the small peptide (few DOF) and the large solvent bath (many DOF)
+; equilibrate at different rates and must be thermalized independently.
+tcoupl              = V-rescale
+tc-grps             = Protein Non-Protein
+tau_t               = 0.1   0.1 ; Coupling constant (ps); 0.1 = fast relaxation
+ref_t               = 310   310 ; Reference temperature (K), physiological
+
+; --- Pressure coupling ---
+pcoupl              = no         ; No barostat in NVT phase
+
+; --- Velocity generation ---
+gen_vel             = yes        ; Assign Maxwell-Boltzmann velocities
+gen_temp            = 310        ; Temperature for velocity distribution
+gen_seed            = -1         ; Random seed from system clock
+
+; --- Bond constraints ---
+; LINCS constrains all bonds involving hydrogen atoms, enabling dt=2fs.
+; Without constraints, X-H stretches (period ~10 fs) require dt≤0.5 fs.
+; LINCS is O(n) per constraint and numerically stable for molecular dynamics.
+; Do NOT use constraints=all-bonds — CHARMM36m requires flexible heavy-atom bonds.
+constraint_algorithm = LINCS
+constraints         = h-bonds
+lincs_iter          = 1          ; Correction iterations (1 is sufficient for h-bonds)
+lincs_order         = 4          ; Expansion order for constraint coupling matrix
