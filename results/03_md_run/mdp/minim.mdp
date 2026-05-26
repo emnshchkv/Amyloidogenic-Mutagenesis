@@ -1,0 +1,37 @@
+; minim.mdp — Energy Minimization (PrP)
+; =======================================
+; System: Human PrP(125–228), CHARMM36m / CHARMM-TIP3P / 150 mM NaCl
+;
+; PrP-SPECIFIC NOTES:
+; The disulfide bond Cys179–Cys214 creates a stiff internal constraint.
+; Energy minimization must relax the surrounding environment without
+; distorting this covalent crosslink. Steepest descent handles this well
+; because it avoids overshooting along stiff energy surfaces.
+;
+; If minimization fails to converge (Fmax remains high near the disulfide),
+; try reducing emstep to 0.005 or increasing nsteps to 100000. This is
+; rare with properly prepared PDB structures but can occur if the
+; Sγ-Sγ distance in the starting structure deviates from the equilibrium
+; bond length (0.204 nm for CHARMM36m).
+
+integrator          = steep
+emtol               = 500.0
+emstep              = 0.01
+nsteps              = 10000
+
+cutoff-scheme       = Verlet
+verlet-buffer-tolerance = 0.005
+nstlist             = 1
+pbc                 = xyz
+
+coulombtype         = PME
+rcoulomb            = 1.2
+fourierspacing      = 0.12
+pme-order           = 4
+ewald-rtol          = 1e-5
+
+vdwtype             = cutoff
+vdw-modifier        = force-switch
+rvdw                = 1.2
+rvdw-switch         = 1.0
+DispCorr            = no
