@@ -1,0 +1,52 @@
+; ions.mdp — Preprocessing for genion (PrP)
+; ===========================================
+; System: Human prion protein structured domain PrP(125–228)
+; Force field: CHARMM36m / CHARMM-modified TIP3P
+;
+; STRUCTURE SELECTION AND PREPARATION:
+; Unlike Aβ peptides, PrP has a well-defined globular fold:
+;   • 3 α-helices: H1 (144–154), H2 (173–194), H3 (200–228)
+;   • 2 β-strands: S1 (128–131), S2 (161–164), forming a short
+;     antiparallel sheet
+;   • 1 disulfide bond: Cys179–Cys214 (stabilizes H2–H3 interface)
+;
+; RECOMMENDED PDB STRUCTURES:
+;   PDB 1QLX — Human PrP(125–228), NMR in acetate buffer pH 4.5
+;              20 conformers; use Model 1 (fewest violations)
+;   PDB 2LSB — Human PrP(90–230), NMR at pH 4.5
+;              Includes the unstructured region 90–124 (optional)
+;   PDB 1QM0 — Human PrP(125–228), NMR at pH 7.0
+;              Physiological pH — arguably better starting point
+;
+; For teaching purposes, use PDB 1QLX or 1QM0 (structured domain only).
+; If students want to study the disordered N-terminal tail, use 2LSB
+; and apply IDP-like box sizing (1.5 nm padding) for that region.
+;
+; DISULFIDE BOND HANDLING:
+; The Cys179–Cys214 disulfide bond is ESSENTIAL for PrP^C stability.
+; GROMACS pdb2gmx detects it automatically if:
+;   1. The Sγ–Sγ distance is < 0.3 nm in the PDB
+;   2. No HG atoms are present on these cysteines
+; Verify by checking the topology for CYS2 residue type (not CYS)
+; and a [bonds] entry connecting SG atoms across residues.
+;
+; HISTIDINE RESIDUES IN PrP(125–228):
+; Depending on the construct: His140, His155, His177, His187
+; At pH 7.4, use HSE (Nε-protonated, neutral) for all.
+; At pH 4.5 (matching NMR conditions), consider HSP (doubly protonated,
+; +1 charge) for residues with predicted pKa above 4.5.
+; ⚠ DECISION POINT: Choose pH 7.4 for biological relevance, or
+; pH 4.5 to match the experimental structure's conditions.
+
+integrator      = steep
+emtol           = 1000.0
+emstep          = 0.01
+nsteps          = 10000
+
+nstlist         = 1
+cutoff-scheme   = Verlet
+verlet-buffer-tolerance = 0.005
+coulombtype     = cutoff
+rcoulomb        = 1.0
+rvdw            = 1.0
+pbc             = xyz
