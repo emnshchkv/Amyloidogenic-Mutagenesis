@@ -16,7 +16,7 @@ Cross-beta, AmyPred, AmyloGram)                pentamers                  & WT c
 
 ### Step 0 — In Silico Amyloid beta-42 Mutagenesis
 
-A library of 65 Aβ42 single-point substitution variants was generated that serve as input for all downstream prediction tools (Step 1) and selects the mutation targets for MD simulation (Steps 2–3).
+A library of 465 Aβ42 single-point substitution variants was generated. These in silico mutations were then cross-referenced with the known database of all described amyloid beta mutations obtained from UniProt. Only those mutations that are present in the database were selected for all downstream prediction tools (Step 1) and selects the mutation targets for MD simulation (Steps 2–3).
 
 → Full documentation: [`0_step_mutagenesis/`](0_step_mutagenesis/)
 
@@ -41,6 +41,14 @@ Two notebooks process each trajectory: one characterises the mutant in isolation
 ---
 
 ## Results
+
+### Mutation Table
+
+![Mutation table of all 65 Aβ42 variants](images/abeta42_mutations_alignment_dark.png)
+
+The numbered wild-type amyliod beta-42 sequence is shown at the top; below, each mutation is represented by the changed letter at its position (the remaining positions are dashes). Colors indicate clinically relevant mutations: green for protective, red for pathogenic.
+
+---
 
 ### Consensus Ranking
 
@@ -73,7 +81,6 @@ F20L shows an RMSD distribution nearly identical to WT (~7–9 Å), with three s
 ![Cα RMSD: WT vs G33R](images/01_rmsd_wt_vs_g33r.png)
 
 G33R shows a consistently elevated RMSD relative to WT throughout the trajectory, with the distribution shifted from ~7–8 Å (WT) to ~10–13 Å (G33R). The arginine substitution at position 33 destabilises the protein as sharp exponential-like increase at ~90 ns can be detected. This potentially can introduce ongoing structural rearrangement.
-
 
 ---
 
