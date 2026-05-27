@@ -1,0 +1,32 @@
+; ions.mdp — Preprocessing for genion (Aβ39)
+; ============================================
+; System: Aβ39 monomer (39 residues: Asp1–Val39)
+; Force field: CHARMM36m / CHARMM-modified TIP3P
+;
+; NOTE ON Aβ39 STRUCTURE:
+; Aβ39 lacks the C-terminal tripeptide Val40-Ile41-Ala42 that is
+; present in the more amyloidogenic Aβ42 variant. No high-resolution
+; NMR structure of monomeric Aβ39 is available in the PDB.
+;
+; RECOMMENDED STARTING STRUCTURE PREPARATION:
+; Option A (preferred): Truncate PDB 1IYT (Aβ42) by deleting residues
+;   40–42 using a text editor, then add proper C-terminal capping:
+;   gmx pdb2gmx will automatically add -COO⁻ terminus to Val39.
+; Option B: Use the Aβ40 structure PDB 2LFM (residues 1–40) and
+;   truncate residue 40. This is solved in aqueous SDS micelles.
+; Option C: Build from sequence using a coil-generation tool (e.g.,
+;   Modeller or PyMOL's "fab" command) — appropriate for IDPs since
+;   the initial structure will be lost during equilibration anyway.
+
+integrator      = steep
+emtol           = 1000.0
+emstep          = 0.01
+nsteps          = 10000
+
+nstlist         = 1
+cutoff-scheme   = Verlet
+verlet-buffer-tolerance = 0.005
+coulombtype     = cutoff
+rcoulomb        = 1.0
+rvdw            = 1.0
+pbc             = xyz

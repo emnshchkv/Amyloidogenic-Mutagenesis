@@ -1,0 +1,56 @@
+; npt.mdp — NPT Equilibration (Aβ39)
+; ====================================
+; System: Aβ39 monomer, CHARMM36m / CHARMM-TIP3P / 150 mM NaCl
+; Duration: 500 ps
+;
+; SYSTEM SIZE COMPARISON:
+; Aβ39 (~39 residues, ~580 atoms) produces a slightly smaller solvated
+; system than Aβ42 (~42 residues, ~630 atoms) — expect ~15,000–35,000
+; water molecules depending on box padding. The density equilibration
+; timescale is comparable; 500 ps is sufficient for both.
+
+define              = -DPOSRES
+integrator          = md
+dt                  = 0.002
+nsteps              = 80000     ; 100 ps
+continuation        = yes
+
+nstxout-compressed  = 500
+nstenergy           = 500
+nstlog              = 500
+
+cutoff-scheme       = Verlet
+verlet-buffer-tolerance = 0.005
+nstlist             = 20
+pbc                 = xyz
+
+coulombtype         = PME
+rcoulomb            = 1.2
+fourierspacing      = 0.12
+pme-order           = 4
+ewald-rtol          = 1e-5
+
+vdwtype             = cutoff
+vdw-modifier        = force-switch
+rvdw                = 1.2
+rvdw-switch         = 1.0
+DispCorr            = no
+
+tcoupl              = V-rescale
+tc-grps             = Protein Non-Protein
+tau_t               = 0.1   0.1
+ref_t               = 310   310
+
+pcoupl              = C-rescale
+pcoupltype          = isotropic
+tau_p               = 5.0
+ref_p               = 1.0
+compressibility     = 4.5e-5
+refcoord-scaling    = com
+
+gen_vel             = no
+
+constraint_algorithm = LINCS
+constraints         = h-bonds
+lincs_iter          = 1
+lincs_order         = 4
