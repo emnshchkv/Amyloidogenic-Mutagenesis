@@ -1,169 +1,132 @@
-Repository for the prediction and prioritization of mutations that influence the amyloidogenic properties of Aβ and PrP. Project conducted at the Bioinformatics Institute, 2026.
+# Amyloidogenic Mutagenesis and Structural Dynamics of Aβ39
 
-# Amyloidogenic Mutagenesis Script
+Author: Sergey Ilin
+Date: 28.05.2026
 
-This script performs targeted mutagenesis to reduce amyloidogenic potential by identifying enhancer amino acids and replacing them with beta-breaker sequences.
+This repository contains the complete computational workflow for Aβ39 for the study *“Prediction and prioritisation of mutations influencing on amyloidogenic properties of Aβ and PrP”*.
 
-## Features
+The pipeline comprises systematic mutagenesis of Aβ39, consensus‑based aggregation propensity prediction, and all‑atom molecular dynamics simulations of wild‑type and selected mutant structures (monomers and tetramers).
 
-- **Enhancer Detection**: Automatically finds enhancer amino acids (F, Y, W, V, L, I, Q, N, G) in specified regions
-- **Multiple Beta-Breaker Types**: 
-  - Single amino acids: R, P
-  - Dipeptides: WY, WM
-- **Mutation Strategies**:
-  - Single mutations (one enhancer at a time)
-  - Combinatorial mutations (multiple enhancers simultaneously)
-  - Fixed combinations (all to P, all to R, alternating P/R)
-- **Flexible Input**: Accepts both FASTA files and sequence strings
-- **Region-Specific**: Target specific regions of interest
+## Repository Structure
 
-## Installation
+- `Mutagenesis_and_Predictions/` – scripts for mutant generation and aggregation propensity assessment  
+- `MD/` – GROMACS protocols and automation for molecular dynamics simulations  
+- `results/` – processed trajectories and Jupyter notebooks for data analysis  
+- `images/` – final figures  
+- `gifs/` – molecular dynamics trajectory animations  
+- `requirements.txt` – Python dependencies  
 
-The script requires Python 3.6 or higher. No additional packages needed - uses only standard library.
+## 1. Environment Setup
 
-```bash
-chmod +x amyloid_mutagenesis.py
-```
+**System requirements:** GROMACS 2024.3 compiled with CUDA 12.8 support (GPU acceleration required), Python ≥3.10, CUDA Toolkit 12.8.
 
-## Usage
+**Installation:**  
+Clone the repository with `git clone https://github.com/emnshchkv/Amyloidogenic-Mutagenesis.git`, enter the directory `cd Amyloidogenic-Mutagenesis`, and switch to the branch `git checkout amyloid-beta-39-analysis`.  
 
-### Basic Usage
+Create a virtual environment: `python -m venv venv`. Activate it with `source venv/bin/activate` (Linux/macOS) or `venv\Scripts\activate` (Windows).  
 
-```bash
-# Using a sequence string
-python amyloid_mutagenesis.py --sequence "MKVLIVLLIPLASAPTVIGVK" --region "5:10,15:20" --output mutations.fasta
+Install the required Python packages: `pip install -r requirements.txt`.  
 
-# Using a FASTA file
-python amyloid_mutagenesis.py --fasta protein.fasta --region "1:50" --output mutations.fasta
-```
+Ensure that the `gmx` executable is available in your `$PATH`.
 
-### Advanced Usage
+## 2. Mutant Generation and Aggregation Prediction
 
-```bash
-# Multiple regions with custom settings
-python amyloid_mutagenesis.py \
-  --fasta protein.fasta \
-  --region "1:20,35:50,70:85" \
-  --output mutations.fasta \
-  --no-dipeptides \
-  --max-combinations 2
+Navigate to the prediction directory: `cd Mutagenesis_and_Predictions/scripts`. Execute the following scripts sequentially:  
 
-# Only single mutations and fixed combinations
-python amyloid_mutagenesis.py \
-  --sequence "MKVLIVLLIPLASAPTVIGVK" \
-  --region "1:21" \
-  --output mutations.fasta \
-  --no-dipeptides \
-  --no-combinatorial
-```
+- `python make_mutants.py` – generates all single‑point mutants in amyloidogenic regions of Aβ39.  
+- `python Aggregation_ranking.py` – runs the consensus aggregation propensity predictor.  
 
-## Command Line Arguments
+This workflow produces mutant structures and ranks them according to predicted changes in amyloidogenicity using a consensus of established algorithms (TANGO, PASTA 2.0, AmyPred, and CrossBeta).
 
-### Required Arguments
+## 3. Molecular Dynamics Simulations
 
-- `--sequence` or `--fasta`: Input sequence (mutually exclusive)
-  - `--sequence`: Protein sequence as string
-  - `--fasta`: Path to FASTA file
-- `--region`: Regions of interest (format: "start:end,start:end") - 1-indexed
-- `--output`: Output FASTA file path
+All MD protocols are automated via GNU Make within the `MD/` directory.
 
-### Optional Arguments
+**Example for the wild‑type monomer:**  
+`cd MD/MD_monomers/WT`  
+`make -j2 all` – full pipeline (setup + production MD).  
 
-- `--no-single`: Exclude single amino acid mutations
-- `--no-dipeptides`: Exclude dipeptide insertions  
-- `--no-combinatorial`: Exclude combinatorial mutations
-- `--no-fixed`: Exclude fixed combination mutations
-- `--max-combinations`: Maximum simultaneous mutations (default: 3)
+Alternatively, step‑by‑step:  
+`make setup` – topology, solvation, energy minimization, equilibration.  
+`make run_md` – production MD run.  
+`make process` – trajectory processing.  
+`make protein_only` – generate a protein‑only trajectory (no solvent).  
 
-## Example: Basic Amyloid-β Analysis
+Repeat the procedure for selected mutant in both monomeric and tetrameric systems located in `MD/MD_monomers/` and `MD/MD_tetramers/`. Detailed protocols are provided in the respective `README.md` files and the `Makefile` in each subdirectory.
 
-```bash
-# Analyze the amyloid-β peptide
-python amyloid_mutagenesis.py \
-  --sequence "MKVLIVLLIPLASAPTVIGVK" \
-  --region "17:21,30:42" \
-  --output Abeta42_mutations.fasta
-```
+## 4. Results Analysis
 
-## Output Format
+Processed trajectories are available in `results/XTCs_and_TPRs/NO_SOL/`.  
 
-The script generates a FASTA file containing:
+Launch the analysis notebooks: `cd results/notebooks` and `jupyter lab`.  
 
-1. **Original Sequence**: The input sequence unchanged
-2. **Single Mutations**: Each enhancer replaced individually with R or P
-3. **Dipeptide Insertions**: Each enhancer replaced with WY or WM
-4. **Combinatorial Mutations**: Multiple enhancers mutated simultaneously
-5. **Fixed Combinations**: All enhancers to P, all to R, or alternating P/R
+**Key notebooks:**  
+- `Monomers_analysis.ipynb` – analysis of monomeric systems (RMSD, RMSF, Rg, SASA).  
+- `Tetramers_analysis.ipynb` – analysis of tetrameric assemblies (inter‑chain contacts, oligomer stability).  
 
-### FASTA Header Format
+These notebooks reproduce all figures presented in the study.
 
-- `>Original_Sequence`
-- `>Mutant_XXXX_Description`
-  - Single: `V4R` (V at position 4 to R)
-  - Dipeptide: `F5_WY` (F at position 5 to WY)
-  - Combinatorial: `V4R_F5P` (Multiple mutations)
-  - Fixed: `ALL_TO_P_V4P_F5P` (All enhancers to P)
+**Visualisation materials:**  
+- `images/` – high‑resolution figures for publication.  
+- `gifs/` – animated trajectories demonstrating structural dynamics.
 
-## Performance Notes
+## Reproducibility Pipeline Summary
 
-- Single mutations: 2 × number of enhancers
-- Dipeptide insertions: 2 × number of enhancers  
-- Combinatorial: Exponential with max_combinations setting (exponential growth!)
-- Fixed combinations: 3 mutations (all to P, all to R, alternating P/R)
-- Total mutations can be large for proteins with many enhancers
+1. Set up the computational environment as described above.  
+2. Generate mutants and compute aggregation predictions.  
+3. Perform molecular dynamics simulations for selected systems.  
+4. Process trajectories using the provided `Makefile` targets.  
+5. Execute the analysis notebooks in `results/notebooks/`.  
 
-### Mutation Count Warnings
+All simulation parameters and analysis scripts are included to ensure full reproducibility.
 
-The script will **automatically warn you** in the following cases:
+# Main Results and Discussion
 
-1. **During combinatorial generation**: If > 500 combinatorial mutations are generated
-   - Message: "Consider reducing --max-combinations parameter to limit output size"
-   - Recommendation: Use `--max-combinations 2` for large proteins
+## Consensus ranking
 
-2. **At pipeline completion**: If total mutations > 500
-   - Message: "This may result in a large output file"
-   - Recommendation: Adjust mutation parameters or reduce region size
+Consensus z-score (mean across four tools: TANGO, PASTA, AmyPred-FRL, Cross-beta) for all 399 variants. Bars above zero indicate predicted increase in aggregation; bars below zero indicate predicted decrease. Top-10 aggregators and top-10 disruptors are highlighted with a gold outline.
 
-### Impact of max_combinations on Output
+![A%CE%B239_ranking_consensus.png](attachment:A%CE%B239_ranking_consensus.png)
 
-Example with 6 enhancers:
-- `--max-combinations 2`: ~96 combinatorial mutations
-- `--max-combinations 3`: ~512 combinatorial mutations (triggers warning!)
-- `--max-combinations 4`: ~1,536 combinatorial mutations (very large!)
+G25D were selected for further analysis.
 
-**Best Practice**: Start with `--max-combinations 2` and increase only if needed for your analysis.
+## Molecular dynamics analysis
 
-## Logging
+We first recommend viewing the animation generated in PyMOL, available at `gifs/Tetramers_WT_vs_G25D.gif`. In this visualization, the wild‑type protein is shown in magenta, while the G25D mutant is shown in cyan. It is readily apparent that the tertiary structure of the mutant becomes less stable compared to that of the wild‑type protein.
 
-The script generates a detailed log file (`amyloid_mutagenesis.log` by default) containing:
-- Sequence and region validation details
-- Enhancer detection results
-- Mutation generation statistics
-- Performance metrics
-- **Warnings if mutations exceed 500** (when combinatorial generation is exponential)
-- Any warnings or errors encountered
+![Comparison of wild‑type and G25D tetramers](gifs/Tetramers_WT_vs_G25D.gif)
 
-Use `--log` to specify a custom log file path and `--verbose` for debug-level console output.
+It is confirmed by the molecular dynamics data analysis in `results/notebooks/Tetramers_analysis.ipynb` The mutant G25D protein spends 20% in a disaggregated state, while the wild type spent the entire simulation in the mid-tetramer state.
 
-## Warning System
+![chain_contact_oligomeric_states_distribution.png](attachment:chain_contact_oligomeric_states_distribution.png)
 
-The script includes built-in safeguards to prevent accidental generation of excessively large mutation libraries:
+![mass_centers_oligomeric_states_distribution.png](attachment:mass_centers_oligomeric_states_distribution.png)
 
-| Situation | Threshold | Warning | Solution |
-|-----------|-----------|---------|----------|
-| Combinatorial mutations | > 500 | Displayed on stderr during generation | Reduce `--max-combinations` |
-| Total mutations | > 500 | Displayed on stderr at completion | Adjust all mutation parameters |
+Destabilization of the contact between monomers is also visible in the heat map of interactions and the distribution of contacts between different regions. The mutation clearly reduces the density of monomer contacts in the turn zone.
 
-Warnings are logged in the log file with full context for reproducibility.
+![tetramers_contact_maps_WT_vs_G25D.png](attachment:tetramers_contact_maps_WT_vs_G25D.png)
 
-## Error Handling
+![tetramers_domain_contacts_comparison.png](attachment:tetramers_domain_contacts_comparison.png)
 
-The script includes comprehensive error handling with specific exit codes:
-- Exit code 2: Sequence validation error
-- Exit code 3: Region validation error
-- Exit code 4: FASTA file reading error
-- Exit code 5: Output file writing error
-- Exit code 6: Argument validation error
-- Exit code 7: General mutagenesis error
-- Exit code 130: Script interrupted by user (Ctrl+C)
-- Exit code 1: Unexpected error
+Moreover, the model shows that significantly fewer hydrogen bonds are formed between the monomers in the mutant (42 versus 50 in the tetramer), and the D23-K28 salt bridge, which is essential for the formation of the amyloid structure, is practically not formed in the mutant compared to the wild type.
+
+![tetramers_backbone_hbonds_timeseries.png](attachment:tetramers_backbone_hbonds_timeseries.png)
+
+![salt_bridge_distance_distribution.png](attachment:salt_bridge_distance_distribution.png)
+
+We hypothesized that by replacing glycine at position 25 with aspartate, we disrupted the flexibility of the protein chain at the turning zone, leading to destabilization of the native secondary structure of the monomers. This can be observed dynamically. We invite you to view the molecular dynamics animations of the monomers `gifs/Monomer_WT.gif` and `gids/Monomer_G25D.gif`. The 25th amino acid residue, which was mutated, is highlighted in red. The wild-type protein is visible after approximately 80-90 ns. In the model, the protein bends along this residue and folds into a stable structure, while the mutant protein failed to fold in this manner during the simulation. However, this may simply be due to the short simulation time and the small number of dynamics replicates. This fact can be clearly demonstrated by the Radius of Gyration dynamics of the monomers and the heat map of intramolecular contacts.
+
+![Monomer_WT.png](attachment:Monomer_WT.png)
+
+![Comparison of wild‑type and G25D tetramers](gifs/Monomer_WT)
+
+![Comparison of wild‑type and G25D tetramers](gifs/Monomer_G25D)
+
+![03_rg_comparison.png](attachment:03_rg_comparison.png)
+
+![08_contact_maps_comparison.png](attachment:08_contact_maps_comparison.png)
+
+
+## Reference
+
+Bioinformatics Institute, 2026.

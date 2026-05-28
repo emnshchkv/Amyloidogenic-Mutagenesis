@@ -3,7 +3,7 @@
 ## Overview
 
 The `MD/` directory contains all necessary files and scripts to perform all-atom molecular dynamics (MD) simulations of **wild-type (WT)** and **G25D mutant** Aβ39 peptides in both monomeric and tetrameric forms using **GROMACS 2024.3**.
-
+.pdb files was converted from .cif files with PyMOL which was generated with AlphaFOLD 3
 ## Directory Structure
 
 - **`mdps/`** — Contains standardized GROMACS parameter files (`.mdp`) for all simulation stages:
