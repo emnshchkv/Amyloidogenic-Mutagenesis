@@ -86,7 +86,7 @@ All simulation parameters and analysis scripts are included to ensure full repro
 
 Consensus z-score (mean across four tools: TANGO, PASTA, AmyPred-FRL, Cross-beta) for all 399 variants. Bars above zero indicate predicted increase in aggregation; bars below zero indicate predicted decrease. Top-10 aggregators and top-10 disruptors are highlighted with a gold outline.
 
-![Ranking_consensus.png](images/Aβ39_ranking_consensus)
+![Ranking_consensus.png](images/Aβ39_ranking_consensus.png)
 
 G25D were selected for further analysis.
 
