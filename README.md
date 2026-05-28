@@ -86,7 +86,7 @@ All simulation parameters and analysis scripts are included to ensure full repro
 
 Consensus z-score (mean across four tools: TANGO, PASTA, AmyPred-FRL, Cross-beta) for all 399 variants. Bars above zero indicate predicted increase in aggregation; bars below zero indicate predicted decrease. Top-10 aggregators and top-10 disruptors are highlighted with a gold outline.
 
-![A%CE%B239_ranking_consensus.png](attachment:A%CE%B239_ranking_consensus.png)
+![Ranking_consensus.png](images/Aβ39_ranking_consensus)
 
 G25D were selected for further analysis.
 
@@ -98,33 +98,33 @@ We first recommend viewing the animation generated in PyMOL, available at `gifs/
 
 It is confirmed by the molecular dynamics data analysis in `results/notebooks/Tetramers_analysis.ipynb` The mutant G25D protein spends 20% in a disaggregated state, while the wild type spent the entire simulation in the mid-tetramer state.
 
-![chain_contact_oligomeric_states_distribution.png](attachment:chain_contact_oligomeric_states_distribution.png)
+![chain_contact_oligomeric_states_distribution.png](images/chain_contact_oligomeric_states_distribution.png)
 
-![mass_centers_oligomeric_states_distribution.png](attachment:mass_centers_oligomeric_states_distribution.png)
+![mass_centers_oligomeric_states_distribution.png](images/mass_centers_oligomeric_states_distribution.png)
 
 Destabilization of the contact between monomers is also visible in the heat map of interactions and the distribution of contacts between different regions. The mutation clearly reduces the density of monomer contacts in the turn zone.
 
-![tetramers_contact_maps_WT_vs_G25D.png](attachment:tetramers_contact_maps_WT_vs_G25D.png)
+![tetramers_contact_maps_WT_vs_G25D.png](images/tetramers_contact_maps_WT_vs_G25D.png)
 
-![tetramers_domain_contacts_comparison.png](attachment:tetramers_domain_contacts_comparison.png)
+![tetramers_domain_contacts_comparison.png](images/tetramers_domain_contacts_comparison.png)
 
 Moreover, the model shows that significantly fewer hydrogen bonds are formed between the monomers in the mutant (42 versus 50 in the tetramer), and the D23-K28 salt bridge, which is essential for the formation of the amyloid structure, is practically not formed in the mutant compared to the wild type.
 
-![tetramers_backbone_hbonds_timeseries.png](attachment:tetramers_backbone_hbonds_timeseries.png)
+![tetramers_backbone_hbonds_timeseries.png](images/tetramers_backbone_hbonds_timeseries.png)
 
-![salt_bridge_distance_distribution.png](attachment:salt_bridge_distance_distribution.png)
+![salt_bridge_distance_distribution.png](images/salt_bridge_distance_distribution.png)
 
 We hypothesized that by replacing glycine at position 25 with aspartate, we disrupted the flexibility of the protein chain at the turning zone, leading to destabilization of the native secondary structure of the monomers. This can be observed dynamically. We invite you to view the molecular dynamics animations of the monomers `gifs/Monomer_WT.gif` and `gids/Monomer_G25D.gif`. The 25th amino acid residue, which was mutated, is highlighted in red. The wild-type protein is visible after approximately 80-90 ns. In the model, the protein bends along this residue and folds into a stable structure, while the mutant protein failed to fold in this manner during the simulation. However, this may simply be due to the short simulation time and the small number of dynamics replicates. This fact can be clearly demonstrated by the Radius of Gyration dynamics of the monomers and the heat map of intramolecular contacts.
 
-![Monomer_WT.png](attachment:Monomer_WT.png)
+![Monomer_WT.png](images/Monomer_WT.png)
 
-![Comparison of wild‑type and G25D tetramers](gifs/Monomer_WT)
+![Comparison of wild‑type and G25D tetramers](gifs/Monomer_WT.gif)
 
-![Comparison of wild‑type and G25D tetramers](gifs/Monomer_G25D)
+![Comparison of wild‑type and G25D tetramers](gifs/Monomer_G25D.gif)
 
-![03_rg_comparison.png](attachment:03_rg_comparison.png)
+![03_rg_comparison.png](images/03_rg_comparison.png)
 
-![08_contact_maps_comparison.png](attachment:08_contact_maps_comparison.png)
+![08_contact_maps_comparison.png](images/08_contact_maps_comparison.png)
 
 
 ## Reference
