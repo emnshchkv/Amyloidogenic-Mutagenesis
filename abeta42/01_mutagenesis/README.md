@@ -5,7 +5,7 @@ This script performs targeted mutagenesis to reduce amyloidogenic potential by i
 ## Features
 
 - **Enhancer Detection**: Automatically finds enhancer amino acids (F, Y, W, V, L, I, Q, N, G) in specified regions
-- **Multiple Beta-Breaker Types**: 
+- **Multiple Beta-Breaker Types**:
   - Single amino acids: R, P
   - Dipeptides: WY, WM
 - **Mutation Strategies**:
@@ -69,7 +69,7 @@ python amyloid_mutagenesis.py \
 ### Optional Arguments
 
 - `--no-single`: Exclude single amino acid mutations
-- `--no-dipeptides`: Exclude dipeptide insertions  
+- `--no-dipeptides`: Exclude dipeptide insertions
 - `--no-pentapeptides`: Exclude pentapeptide insertions
 - `--no-combinatorial`: Exclude combinatorial mutations
 - `--no-fixed`: Exclude fixed combination mutations
@@ -108,7 +108,7 @@ The script generates a FASTA file containing:
 ## Performance Notes
 
 - Single mutations: 2 × number of enhancers
-- Dipeptide insertions: 2 × number of enhancers  
+- Dipeptide insertions: 2 × number of enhancers
 - Pentapeptide insertions: 2 × number of enhancers
 - Combinatorial: Exponential with max_combinations setting
 - Total mutations can be large for proteins with many enhancers

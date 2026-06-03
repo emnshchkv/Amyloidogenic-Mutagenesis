@@ -9,7 +9,7 @@ Computational study of PrP (Prion Protein) point mutations using amyloidogenicit
 ## Pipeline Overview
 
 ```text
-Five predictors                      GROMACS MD 
+Five predictors                      GROMACS MD
 (PASTA 2.0, TANGO, APPNN,      →    WT + V180R mutant       →    Trajectory analysis
 AmyloGram, AGGRESCAN)                                            & WT comparison
           ↓
@@ -45,7 +45,7 @@ The resulting MD trajectories were analyzed to assess structural stability and l
 The comparison between the WT Prion protein and the prioritized **V180R** mutant reveals a clear structural mechanism: the mutation rigidifies and stabilizes the native α-helical fold of the C-terminal domain, thereby acting as a powerful barrier against pathological conformational transitions.
 
 ### 1. Equilibrium Dynamics and Core Stability (RMSD)
-All-atom molecular dynamics trajectories demonstrate that the V180R mutant achieves significantly higher structural stability compared to the WT. 
+All-atom molecular dynamics trajectories demonstrate that the V180R mutant achieves significantly higher structural stability compared to the WT.
 * The global backbone RMSD of the WT fluctuates around an average of **2.6 Å**, whereas the V180R mutant remains tightly constrained at an average of **1.8 Å**.
 * This rigidification effect is consistently observed across all three major α-helices, with the mutant exhibiting markedly reduced deviations from the native fold:
 
@@ -84,7 +84,7 @@ The per-residue RMSF profiles are globally comparable, with one critical, highly
 
 ### 4. Secondary Structure Preservation (DSSP)
 The evolution of secondary structure over time corroborates the stabilization observed in the macroscopic metrics:
-* **Loop Anchoring:** The per-residue helical fraction for the loop segment immediately preceding Helix 2 (residues 165–170) is significantly higher in the mutant (**0.8**) than in the WT (**0.55**). 
+* **Loop Anchoring:** The per-residue helical fraction for the loop segment immediately preceding Helix 2 (residues 165–170) is significantly higher in the mutant (**0.8**) than in the WT (**0.55**).
 
 ![DSSP PrP WT](images/05a_dssp_propensity_wt.png)
 

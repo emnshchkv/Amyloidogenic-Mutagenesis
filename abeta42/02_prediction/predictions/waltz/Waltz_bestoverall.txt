@@ -1,256 +1,256 @@
->E22Q_Dutch_Abeta42 
+>E22Q_Dutch_Abeta42
 Positions	Sequence	Average score per residue
 16-23	KLVFFAQD	97.993311
 37-42	GGVVIA	92.307692
->D7N_Abeta42 
+>D7N_Abeta42
 Positions	Sequence	Average score per residue
 16-21	KLVFFA	97.993311
 37-42	GGVVIA	92.307692
->M35L_Abeta42 
+>M35L_Abeta42
 Positions	Sequence	Average score per residue
 16-21	KLVFFA	97.993311
 37-42	GGVVIA	92.307692
->R5G_Abeta42 
+>R5G_Abeta42
 Positions	Sequence	Average score per residue
 16-21	KLVFFA	97.993311
 37-42	GGVVIA	92.307692
->E3K_Abeta42 
+>E3K_Abeta42
 Positions	Sequence	Average score per residue
 16-21	KLVFFA	97.993311
 37-42	GGVVIA	92.307692
->H13L_Abeta42 
+>H13L_Abeta42
 Positions	Sequence	Average score per residue
 16-21	KLVFFA	97.993311
 37-42	GGVVIA	92.307692
->E3Q_Abeta42 
+>E3Q_Abeta42
 Positions	Sequence	Average score per residue
 16-21	KLVFFA	97.993311
 37-42	GGVVIA	92.307692
->A42T_Abeta42 
+>A42T_Abeta42
 Positions	Sequence	Average score per residue
 16-21	KLVFFA	97.993311
->I41V_Abeta42 
+>I41V_Abeta42
 Positions	Sequence	Average score per residue
 16-21	KLVFFA	97.993311
->V24M_Abeta42 
-Positions	Sequence	Average score per residue
-16-21	KLVFFA	97.993311
-37-42	GGVVIA	92.307692
->D7H_Abeta42 
+>V24M_Abeta42
 Positions	Sequence	Average score per residue
 16-21	KLVFFA	97.993311
 37-42	GGVVIA	92.307692
->R5Q_Abeta42 
+>D7H_Abeta42
 Positions	Sequence	Average score per residue
 16-21	KLVFFA	97.993311
 37-42	GGVVIA	92.307692
->Wildtype_Abeta_42 
+>R5Q_Abeta42
 Positions	Sequence	Average score per residue
 16-21	KLVFFA	97.993311
 37-42	GGVVIA	92.307692
->G9A_Abeta42 
+>Wildtype_Abeta_42
 Positions	Sequence	Average score per residue
 16-21	KLVFFA	97.993311
 37-42	GGVVIA	92.307692
->M35V_Abeta42 
+>G9A_Abeta42
 Positions	Sequence	Average score per residue
 16-21	KLVFFA	97.993311
 37-42	GGVVIA	92.307692
->F4I_Abeta42 
+>M35V_Abeta42
 Positions	Sequence	Average score per residue
 16-21	KLVFFA	97.993311
 37-42	GGVVIA	92.307692
->D23N_Iowa_Abeta42 
+>F4I_Abeta42
+Positions	Sequence	Average score per residue
+16-21	KLVFFA	97.993311
+37-42	GGVVIA	92.307692
+>D23N_Iowa_Abeta42
 Positions	Sequence	Average score per residue
 16-23	KLVFFAEN	97.993311
 37-42	GGVVIA	92.307692
->E22D_Abeta42 
+>E22D_Abeta42
 Positions	Sequence	Average score per residue
 37-42	GGVVIA	92.307692
->G38V_Abeta42 
+>G38V_Abeta42
 Positions	Sequence	Average score per residue
 16-21	KLVFFA	97.993311
 37-42	GVVVIA	97.324415
->A2T_Icelandic_Abeta42 
+>A2T_Icelandic_Abeta42
 Positions	Sequence	Average score per residue
 16-21	KLVFFA	97.993311
 37-42	GGVVIA	92.307692
->F20L_Abeta42 
+>F20L_Abeta42
 Positions	Sequence	Average score per residue
 37-42	GGVVIA	92.307692
->H13P_Abeta42 
-Positions	Sequence	Average score per residue
-16-21	KLVFFA	97.993311
-37-42	GGVVIA	92.307692
->V24A_Abeta42 
+>H13P_Abeta42
 Positions	Sequence	Average score per residue
 16-21	KLVFFA	97.993311
 37-42	GGVVIA	92.307692
->G25S_Abeta42 
+>V24A_Abeta42
 Positions	Sequence	Average score per residue
 16-21	KLVFFA	97.993311
 37-42	GGVVIA	92.307692
->G9V_Abeta42 
+>G25S_Abeta42
 Positions	Sequence	Average score per residue
 16-21	KLVFFA	97.993311
 37-42	GGVVIA	92.307692
->E22K_Abeta42 
+>G9V_Abeta42
 Positions	Sequence	Average score per residue
 16-21	KLVFFA	97.993311
 37-42	GGVVIA	92.307692
->E22G_Arctic_Abeta42 
+>E22K_Abeta42
 Positions	Sequence	Average score per residue
 16-21	KLVFFA	97.993311
 37-42	GGVVIA	92.307692
->G9E_Abeta42 
+>E22G_Arctic_Abeta42
 Positions	Sequence	Average score per residue
 16-21	KLVFFA	97.993311
 37-42	GGVVIA	92.307692
->G38S_Abeta42 
-Positions	Sequence	Average score per residue
-16-21	KLVFFA	97.993311
->L34V_Abeta42 
+>G9E_Abeta42
 Positions	Sequence	Average score per residue
 16-21	KLVFFA	97.993311
 37-42	GGVVIA	92.307692
->E3G_Abeta42 
+>G38S_Abeta42
+Positions	Sequence	Average score per residue
+16-21	KLVFFA	97.993311
+>L34V_Abeta42
 Positions	Sequence	Average score per residue
 16-21	KLVFFA	97.993311
 37-42	GGVVIA	92.307692
->H14R_Abeta42 
+>E3G_Abeta42
 Positions	Sequence	Average score per residue
 16-21	KLVFFA	97.993311
 37-42	GGVVIA	92.307692
->E11K_Abeta42 
+>H14R_Abeta42
 Positions	Sequence	Average score per residue
 16-21	KLVFFA	97.993311
 37-42	GGVVIA	92.307692
->G25D_Abeta42 
+>E11K_Abeta42
 Positions	Sequence	Average score per residue
 16-21	KLVFFA	97.993311
 37-42	GGVVIA	92.307692
->V39I_Abeta42 
+>G25D_Abeta42
 Positions	Sequence	Average score per residue
 16-21	KLVFFA	97.993311
->K16N_Abeta42 
+37-42	GGVVIA	92.307692
+>V39I_Abeta42
+Positions	Sequence	Average score per residue
+16-21	KLVFFA	97.993311
+>K16N_Abeta42
 Positions	Sequence	Average score per residue
 16-21	NLVFFA	98.662207
 37-42	GGVVIA	92.307692
->I31M_Abeta42 
+>I31M_Abeta42
 Positions	Sequence	Average score per residue
 16-21	KLVFFA	97.993311
 37-42	GGVVIA	92.307692
->V36M_Abeta42 
+>V36M_Abeta42
 Positions	Sequence	Average score per residue
 16-21	KLVFFA	97.993311
 37-42	GGVVIA	92.307692
->A21T_Abeta42 
+>A21T_Abeta42
 Positions	Sequence	Average score per residue
 16-22	KLVFFTE	97.658863
 37-42	GGVVIA	92.307692
->F19L_Abeta42 
+>F19L_Abeta42
 Positions	Sequence	Average score per residue
 16-21	KLVLFA	98.327759
 37-42	GGVVIA	92.307692
->A2V_Abeta42 
+>A2V_Abeta42
 Positions	Sequence	Average score per residue
 16-21	KLVFFA	97.993311
 37-42	GGVVIA	92.307692
->V24G_Abeta42 
+>V24G_Abeta42
 Positions	Sequence	Average score per residue
 16-20	KLVFF	97.993311
 37-42	GGVVIA	92.307692
->H6Q_Abeta42 
+>H6Q_Abeta42
 Positions	Sequence	Average score per residue
 16-21	KLVFFA	97.993311
 37-42	GGVVIA	92.307692
->K28R_Abeta42 
+>K28R_Abeta42
 Positions	Sequence	Average score per residue
 16-21	KLVFFA	97.993311
 37-42	GGVVIA	92.307692
->Q15E_Abeta42 
+>Q15E_Abeta42
 Positions	Sequence	Average score per residue
 16-21	KLVFFA	97.993311
 37-42	GGVVIA	92.307692
->A2G_Abeta42 
+>A2G_Abeta42
 Positions	Sequence	Average score per residue
 16-21	KLVFFA	97.993311
 37-42	GGVVIA	92.307692
->Y10F_Abeta42 
+>Y10F_Abeta42
 Positions	Sequence	Average score per residue
 16-21	KLVFFA	97.993311
 37-42	GGVVIA	92.307692
->V12I_Abeta42 
+>V12I_Abeta42
 Positions	Sequence	Average score per residue
 16-21	KLVFFA	97.993311
 37-42	GGVVIA	92.307692
->A21S_Abeta42 
+>A21S_Abeta42
 Positions	Sequence	Average score per residue
 37-42	GGVVIA	92.307692
->G38C_Abeta42 
+>G38C_Abeta42
 Positions	Sequence	Average score per residue
 16-21	KLVFFA	97.993311
 37-42	GCVVIA	96.32107
->G33R_Abeta42 
+>G33R_Abeta42
 Positions	Sequence	Average score per residue
 16-21	KLVFFA	97.993311
 37-42	GGVVIA	92.307692
->K16R_Abeta42 
+>K16R_Abeta42
 Positions	Sequence	Average score per residue
 16-21	RLVFFA	97.324415
 37-42	GGVVIA	92.307692
->A30V_Abeta42 
+>A30V_Abeta42
 Positions	Sequence	Average score per residue
 16-21	KLVFFA	97.993311
 28-33	KGVIIG	93.979933
 37-42	GGVVIA	92.307692
->H6R_Abeta42 
+>H6R_Abeta42
 Positions	Sequence	Average score per residue
 16-21	KLVFFA	97.993311
 37-42	GGVVIA	92.307692
->V24C_Abeta42 
+>V24C_Abeta42
 Positions	Sequence	Average score per residue
 16-21	KLVFFA	97.993311
 37-42	GGVVIA	92.307692
->A42V_Abeta42 
+>A42V_Abeta42
 Positions	Sequence	Average score per residue
 16-21	KLVFFA	97.993311
 37-42	GGVVIV	94.314381
->I31V_Abeta42 
+>I31V_Abeta42
 Positions	Sequence	Average score per residue
 16-21	KLVFFA	97.993311
 37-42	GGVVIA	92.307692
->M35T_Abeta42 
+>M35T_Abeta42
 Positions	Sequence	Average score per residue
 16-21	KLVFFA	97.993311
 37-42	GGVVIA	92.307692
->V18M_Abeta42 
+>V18M_Abeta42
 Positions	Sequence	Average score per residue
 37-42	GGVVIA	92.307692
->R5L_Abeta42 
-Positions	Sequence	Average score per residue
-16-21	KLVFFA	97.993311
-37-42	GGVVIA	92.307692
->I32V_Abeta42 
+>R5L_Abeta42
 Positions	Sequence	Average score per residue
 16-21	KLVFFA	97.993311
 37-42	GGVVIA	92.307692
->L17V_Abeta42 
+>I32V_Abeta42
+Positions	Sequence	Average score per residue
+16-21	KLVFFA	97.993311
+37-42	GGVVIA	92.307692
+>L17V_Abeta42
 Positions	Sequence	Average score per residue
 16-21	KVVFFA	97.993311
 37-42	GGVVIA	92.307692
->A21G_Abeta42 
+>A21G_Abeta42
 Positions	Sequence	Average score per residue
 37-42	GGVVIA	92.307692
->D7E_Abeta42 
-Positions	Sequence	Average score per residue
-16-21	KLVFFA	97.993311
-37-42	GGVVIA	92.307692
->H13R_Abeta42 
+>D7E_Abeta42
 Positions	Sequence	Average score per residue
 16-21	KLVFFA	97.993311
 37-42	GGVVIA	92.307692
->R5P_Abeta42 
+>H13R_Abeta42
+Positions	Sequence	Average score per residue
+16-21	KLVFFA	97.993311
+37-42	GGVVIA	92.307692
+>R5P_Abeta42
 Positions	Sequence	Average score per residue
 16-21	KLVFFA	97.993311
 37-42	GGVVIA	92.307692

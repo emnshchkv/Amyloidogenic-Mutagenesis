@@ -54,7 +54,7 @@ The numbered wild-type amyliod beta-42 sequence is shown at the top; below, each
 
 ![Consensus ranking of all 65 Aβ42 variants](images/ranking_consensus.png)
 
-Consensus z-score (mean across four tools: TANGO, PASTA, AmyPred-FRL, Cross-beta) for all 65 variants. Bars above zero indicate predicted increase in aggregation; bars below zero indicate predicted decrease. Top-10 aggregators and top-10 disruptors are highlighted with a gold outline. 
+Consensus z-score (mean across four tools: TANGO, PASTA, AmyPred-FRL, Cross-beta) for all 65 variants. Bars above zero indicate predicted increase in aggregation; bars below zero indicate predicted decrease. Top-10 aggregators and top-10 disruptors are highlighted with a gold outline.
 
 **F20L**, **G33R**, and **H14R** were selected for further analysis to cover different regions of the sequence and different predicted effect magnitudes.
 

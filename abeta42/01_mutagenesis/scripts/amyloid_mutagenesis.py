@@ -869,10 +869,10 @@ def main():
                     Examples:
                     # Using a sequence string
                     python amyloid_mutagenesis.py --sequence "MKVLIVLLIPLASAPTVIGVK" --region "5:10,15:20" --output mutations.fasta
-                    
+
                     # Using a FASTA file
                     python amyloid_mutagenesis.py --fasta protein.fasta --region "1:50" --output mutations.fasta
-                    
+
                     # Custom mutation types
                     python amyloid_mutagenesis.py --fasta protein.fasta --region "1:50" --output mutations.fasta \\
                                                     --no-dipeptides --max-combinations 2

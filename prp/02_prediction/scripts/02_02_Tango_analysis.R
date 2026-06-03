@@ -3,14 +3,14 @@ library(tidyverse)
 
 # --- Configuration ---
 # Path to the directory with TANGO results (.txt files)
-data_dir <- "../data/prp_tango" 
+data_dir <- "../data/prp_tango"
 wt_name <- "WT"  # Specify the exact name of the wild-type file (without .txt)data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAkCAYAAAD7PHgWAAABBklEQVR4Xu2XMQrCQBBFBQvR6wgJHsEDpHVjBDvvoBhbI3bWCkZbFUyhFrYiEat0WgmC6AVkdQqbIVmWZAOi82C64b+/bDWZDEEQP4phTLMaa9d003bTGMgu1psF7JVGNzuWPdzs18GDz443rgrIcndXbvW8g1axGfZKo7P2eBXc+WB74a3FGXtiA1kwzfnpqTF7hL3SwDfAaz+BqvjkwYADe6WhglQwJlQwKVQwKakVTGOoYNL5z4JxwBlUMEwqAu9SwTCpCLxLBcOkIvCusoKT9/WFQ6OkIvCukoJwt5rO0sehUVIReBem6ng+OLBXmnKjn4PbGM5PeKnqgXIlo5vHXoL4Nl4ZYqbbEGA7+wAAAABJRU5ErkJggg==
 start_pos <- 148 # Start of the target region (170 - 22)
 end_pos <- 173   # End of the target region (195 - 22)
 
 # Find all .txt files in the directory
-file_paths <- list.files(path = data_dir, 
-                         pattern = "\\.txt$", 
+file_paths <- list.files(path = data_dir,
+                         pattern = "\\.txt$",
                          full.names = TRUE)
 
 if (length(file_paths) == 0) {
@@ -21,19 +21,19 @@ if (length(file_paths) == 0) {
 results_list <- lapply(file_paths, function(file_path) {
   # Extract mutation name (remove .txt extension)
   mut_name <- str_remove(basename(file_path), "\\.txt$")
-  
+
   # Read the data. read_table handles any amount of whitespace well
   df <- read_table(file_path, show_col_types = FALSE)
-  
+
   # Force 'res' column to numeric format to drop leading zeros (01 -> 1)
   df <- df %>% mutate(res = as.numeric(res))
-  
+
   # Filter data by the target region
   df_region <- df %>% filter(res >= start_pos & res <= end_pos)
-  
+
   # Calculate the maximum aggregation value in the region
   max_agg <- max(df_region$Aggregation, na.rm = TRUE)
-  
+
   tibble(mutation = mut_name, max_agg = max_agg)
 })
 
@@ -54,7 +54,7 @@ df_tango <- df_results %>%
   mutate(
     # Calculate the difference
     delta_agg = max_agg - wt_max_agg,
-    
+
     # Note: The logic of effects is INVERTED compared to PASTA
     effect = case_when(
       delta_agg < 0 ~ "Reduced Amyloidogenicity", # Decrease in peak
@@ -79,8 +79,8 @@ write_csv(df_tango, "../data/tango_results.csv")
 waterfall_plot <- ggplot(df_tango, aes(x = mutation, y = delta_agg, fill = effect)) +
   geom_bar(stat = "identity", width = 0.8) +
   # Maintain the same colors, but now blue bars represent decreased aggregation
-  scale_fill_manual(values = c("Reduced Amyloidogenicity" = "blue", 
-                               "Increased Amyloidogenicity" = "red", 
+  scale_fill_manual(values = c("Reduced Amyloidogenicity" = "blue",
+                               "Increased Amyloidogenicity" = "red",
                                "Neutral" = "#9E9E9E")) +
   theme_minimal() +
   theme(

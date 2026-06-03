@@ -64,12 +64,12 @@ To ensure reproducibility and pipeline integrity, several variables are hardcode
 
 * `start_pos = 148` and `end_pos = 173`: These represent the structural region of interest (originally PrP 170-195 aa). They are hardcoded as 148-173 because the 22-amino-acid N-terminal signal peptide was removed during the previous structural preparation step, shifting the index.
 
-* `prp_pasta20`: PASTA2.0 is a web tool, before running the respective script ensure that PASTA2.0 output files are unzipped into the `prp_pasta20` folder, no other modifications are needed. Data uploaded to the repository is exemplary. 
+* `prp_pasta20`: PASTA2.0 is a web tool, before running the respective script ensure that PASTA2.0 output files are unzipped into the `prp_pasta20` folder, no other modifications are needed. Data uploaded to the repository is exemplary.
 
 ## What is gained
 Execution of this pipeline populates the repository subfolders with the following artifacts:
 
-* `../data/` directory: 
+* `../data/` directory:
 
     * Raw TANGO calculation outputs (text files).
 

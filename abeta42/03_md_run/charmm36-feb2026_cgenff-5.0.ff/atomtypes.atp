@@ -2,16 +2,16 @@
 ; created with charmm2gmx version 1.0.4.dev2+gfb5404623 on 2026-02-26 12:16:57.777299
 ; Code: https://gitlab.com/awacha/charmm2gmx
 ; Documentation: https://awacha.gitlab.com/charmm2gmx
-; Citation: András F. Wacha and Justin A. Lemkul: "charmm2gmx: An Automated 
+; Citation: András F. Wacha and Justin A. Lemkul: "charmm2gmx: An Automated
 ;      Method to Port the CHARMM Additive Force Field to GROMACS". Journal of
 ;      Chemical Information and Modeling 2023, 63(14), 4246-4252.
 ;      DOI: 10.1021/acs.jcim.3c00860
 ;
 ; Charmm2GMX written by András Wacha and Justin Lemkul, based on the original
-; port by E. Prabhu Raman, Justin A. Lemkul, Robert Best and Alexander D. 
+; port by E. Prabhu Raman, Justin A. Lemkul, Robert Best and Alexander D.
 ; MacKerell, Jr.
-; The following files were used: 
-; 
+; The following files were used:
+;
 ; ../toppar_c36_releases/charmm/toppar/metals/CHARMM_METAL/par_all22_prot_metals.inp
 ; ../toppar_c36_releases/charmm/toppar/metals/CHARMM_METAL/top_all22_prot_metals.inp
 ; ../toppar_c36_releases/charmm/toppar/par_all35_ethers.prm
@@ -49,7 +49,7 @@
 ;
 
 
-; from file 
+; from file
 
 ; from file ../toppar_c36_releases/charmm/toppar/metals/CHARMM_METAL/par_all22_prot_metals.inp
 
@@ -488,14 +488,14 @@ CLG06B     12.01100 ; CLG2R6B
  CLG14     12.01100 ; CLG3C51
  CLG15     12.01100 ; CLG3C52
  CLG16     12.01100 ; CLG3RC1
- HLGA1      1.00800 ; 
- HLGA2      1.00800 ; 
- HLGA3      1.00800 ; 
- HLGA4      1.00800 ; 
- HLGP1      1.00800 ; 
-HLGR52      1.00800 ; 
-HLGR61      1.00800 ; 
-HLGR62      1.00800 ; 
+ HLGA1      1.00800 ;
+ HLGA2      1.00800 ;
+ HLGA3      1.00800 ;
+ HLGA4      1.00800 ;
+ HLGP1      1.00800 ;
+HLGR52      1.00800 ;
+HLGR61      1.00800 ;
+HLGR62      1.00800 ;
   OLG1     15.99940 ; OLG2D1
   OLG2     15.99940 ; OLG2D2
   OLG3     15.99940 ; OLG2D4
@@ -520,10 +520,10 @@ HLGR62      1.00800 ;
 ; from file ../toppar_c36_releases/charmm/toppar/stream/lipid/toppar_all36_lipid_prot.str
 
 ; from file ../toppar_c36_releases/charmm/toppar/stream/lipid/toppar_all36_lipid_sphingo.str
-  CEL3     12.01100 ; 
-  CTO1     12.01100 ; 
-  CTO2     12.01100 ; 
-   NHL     14.00700 ; 
+  CEL3     12.01100 ;
+  CTO1     12.01100 ;
+  CTO2     12.01100 ;
+   NHL     14.00700 ;
 
 ; from file ../toppar_c36_releases/charmm/toppar/stream/misc/toppar_ions_won.str
   AG1P    107.87000 ; Silver

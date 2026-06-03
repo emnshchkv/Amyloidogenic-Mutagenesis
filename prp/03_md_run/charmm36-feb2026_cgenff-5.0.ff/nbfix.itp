@@ -2,16 +2,16 @@
 ; created with charmm2gmx version 1.0.4.dev2+gfb5404623 on 2026-02-26 12:16:58.046592
 ; Code: https://gitlab.com/awacha/charmm2gmx
 ; Documentation: https://awacha.gitlab.com/charmm2gmx
-; Citation: András F. Wacha and Justin A. Lemkul: "charmm2gmx: An Automated 
+; Citation: András F. Wacha and Justin A. Lemkul: "charmm2gmx: An Automated
 ;      Method to Port the CHARMM Additive Force Field to GROMACS". Journal of
 ;      Chemical Information and Modeling 2023, 63(14), 4246-4252.
 ;      DOI: 10.1021/acs.jcim.3c00860
 ;
 ; Charmm2GMX written by András Wacha and Justin Lemkul, based on the original
-; port by E. Prabhu Raman, Justin A. Lemkul, Robert Best and Alexander D. 
+; port by E. Prabhu Raman, Justin A. Lemkul, Robert Best and Alexander D.
 ; MacKerell, Jr.
-; The following files were used: 
-; 
+; The following files were used:
+;
 ; ../toppar_c36_releases/charmm/toppar/metals/CHARMM_METAL/par_all22_prot_metals.inp
 ; ../toppar_c36_releases/charmm/toppar/metals/CHARMM_METAL/top_all22_prot_metals.inp
 ; ../toppar_c36_releases/charmm/toppar/par_all35_ethers.prm
@@ -51,7 +51,7 @@
 [ nonbond_params ]
 
 
-; NBFIX parameters from 
+; NBFIX parameters from
 ;      i        j  func           sigma         epsilon
 
 
@@ -191,18 +191,18 @@
 
 ; NBFIX parameters from ../toppar_c36_releases/charmm/toppar/stream/lipid/toppar_all36_lipid_cholesterol.str
 ;      i        j  func           sigma         epsilon
-    CRL1     HAL2     1  0.298451070577  0.134306400000 ; 
-    HGA1     HAL2     1  0.238760856462  0.150205600000 ; 
-    CRL2     HAL2     1  0.299341969295  0.173636000000 ; 
-    HGA2     HAL2     1  0.238760856462  0.132632800000 ; 
-    CRL1     HAL1     1  0.298451070577  0.122591200000 ; 
-    HGA1     HAL1     1  0.238760856462  0.137653600000 ; 
-    CRL2     HAL1     1  0.299341969295  0.158573600000 ; 
-    HGA2     HAL1     1  0.238760856462  0.120917600000 ; 
-    CRL1     CTL1     1  0.357250385974  0.115060000000 ; 
-    HGA1     CTL1     1  0.297560171859  0.128867200000 ; 
-    CRL2     CTL1     1  0.358141284692  0.148532000000 ; 
-    HGA2     CTL1     1  0.297560171859  0.113386400000 ; 
+    CRL1     HAL2     1  0.298451070577  0.134306400000 ;
+    HGA1     HAL2     1  0.238760856462  0.150205600000 ;
+    CRL2     HAL2     1  0.299341969295  0.173636000000 ;
+    HGA2     HAL2     1  0.238760856462  0.132632800000 ;
+    CRL1     HAL1     1  0.298451070577  0.122591200000 ;
+    HGA1     HAL1     1  0.238760856462  0.137653600000 ;
+    CRL2     HAL1     1  0.299341969295  0.158573600000 ;
+    HGA2     HAL1     1  0.238760856462  0.120917600000 ;
+    CRL1     CTL1     1  0.357250385974  0.115060000000 ;
+    HGA1     CTL1     1  0.297560171859  0.128867200000 ;
+    CRL2     CTL1     1  0.358141284692  0.148532000000 ;
+    HGA2     CTL1     1  0.297560171859  0.113386400000 ;
 
 
 ; NBFIX parameters from ../toppar_c36_releases/charmm/toppar/stream/lipid/toppar_all36_lipid_detergent.str
@@ -298,5 +298,5 @@
      CAL    OG2P1     1  0.290076622626  0.502080000000 ; from J. Phys. Chem. B 2018, 122, 1484−1494
      CAL      OCL     1  0.287938465703  0.502080000000 ; Rong Shen and Benoit Roux, personal communication
      CAL       OC     1  0.287938465703  0.502080000000 ; Nature Structural & Molecular Biology 23: 590 (2016)
-     CAL    OC2D2     1  0.287938465703  0.502080000000 ; 
-     CAL    OG2D2     1  0.287938465703  0.502080000000 ; 
+     CAL    OC2D2     1  0.287938465703  0.502080000000 ;
+     CAL    OG2D2     1  0.287938465703  0.502080000000 ;

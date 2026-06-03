@@ -3,14 +3,14 @@ library(tidyverse)
 
 # --- Configuration ---
 # Path to the directory with unzipped PASTA 2.0 results
-data_dir <- "../data/prp_pasta20" 
+data_dir <- "../data/prp_pasta20"
 wt_name <- "WT" # Specify the exact name of the wild-type sequence
 start_pos <- 148 # Start of the region (170 - 22)
 end_pos <- 173   # End of the region (195 - 22)
 
 # Find all files containing the free energy profile
-file_paths <- list.files(path = data_dir, 
-                         pattern = "\\.aggr_profile\\.dat\\.free_energy$", 
+file_paths <- list.files(path = data_dir,
+                         pattern = "\\.aggr_profile\\.dat\\.free_energy$",
                          full.names = TRUE)
 
 if (length(file_paths) == 0) {
@@ -22,20 +22,20 @@ results_list <- lapply(file_paths, function(file_path) {
   # Extract mutation name from the file name
   file_name <- basename(file_path)
   mut_name <- str_remove(file_name, "\\.fasta.*$")
-  
+
   # Read the single column containing energy values
   df <- read_table(file_path, col_names = c("energy"), show_col_types = FALSE)
-  
+
   # Add sequence position based on the row number
   df <- df %>% mutate(position = row_number())
-  
+
   # Filter data to keep only the target region
   df_region <- df %>% filter(position >= start_pos & position <= end_pos)
-  
+
   # Calculate required metrics for the region
   min_energy <- min(df_region$energy, na.rm = TRUE)
   mean_energy <- mean(df_region$energy, na.rm = TRUE)
-  
+
   tibble(mutation = mut_name, min_energy = min_energy, mean_energy = mean_energy)
 })
 
@@ -74,8 +74,8 @@ write_csv(df_pasta, "../data/pasta2_results.csv")
 # --- Waterfall Plot Generation ---
 waterfall_plot <- ggplot(df_pasta, aes(x = mutation, y = delta_energy, fill = effect)) +
   geom_bar(stat = "identity", width = 0.8) +
-  scale_fill_manual(values = c("Reduced Amyloidogenicity" = "blue", 
-                               "Increased Amyloidogenicity" = "red", 
+  scale_fill_manual(values = c("Reduced Amyloidogenicity" = "blue",
+                               "Increased Amyloidogenicity" = "red",
                                "Neutral" = "#9E9E9E")) +
   theme_minimal() +
   theme(

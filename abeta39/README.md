@@ -9,32 +9,32 @@ The pipeline comprises systematic mutagenesis of Aβ39, consensus‑based aggreg
 
 ## Repository Structure
 
-- `Mutagenesis_and_Predictions/` – scripts for mutant generation and aggregation propensity assessment  
-- `MD/` – GROMACS protocols and automation for molecular dynamics simulations  
-- `results/` – processed trajectories and Jupyter notebooks for data analysis  
-- `images/` – final figures  
-- `gifs/` – molecular dynamics trajectory animations  
-- `requirements.txt` – Python dependencies  
+- `Mutagenesis_and_Predictions/` – scripts for mutant generation and aggregation propensity assessment
+- `MD/` – GROMACS protocols and automation for molecular dynamics simulations
+- `results/` – processed trajectories and Jupyter notebooks for data analysis
+- `images/` – final figures
+- `gifs/` – molecular dynamics trajectory animations
+- `requirements.txt` – Python dependencies
 
 ## 1. Environment Setup
 
 **System requirements:** GROMACS 2024.3 compiled with CUDA 12.8 support (GPU acceleration required), Python ≥3.10, CUDA Toolkit 12.8.
 
-**Installation:**  
-Clone the repository with `git clone https://github.com/emnshchkv/Amyloidogenic-Mutagenesis.git`, enter the directory `cd Amyloidogenic-Mutagenesis`, and switch to the branch `git checkout amyloid-beta-39-analysis`.  
+**Installation:**
+Clone the repository with `git clone https://github.com/emnshchkv/Amyloidogenic-Mutagenesis.git`, enter the directory `cd Amyloidogenic-Mutagenesis`, and switch to the branch `git checkout amyloid-beta-39-analysis`.
 
-Create a virtual environment: `python -m venv venv`. Activate it with `source venv/bin/activate` (Linux/macOS) or `venv\Scripts\activate` (Windows).  
+Create a virtual environment: `python -m venv venv`. Activate it with `source venv/bin/activate` (Linux/macOS) or `venv\Scripts\activate` (Windows).
 
-Install the required Python packages: `pip install -r requirements.txt`.  
+Install the required Python packages: `pip install -r requirements.txt`.
 
 Ensure that the `gmx` executable is available in your `$PATH`.
 
 ## 2. Mutant Generation and Aggregation Prediction
 
-Navigate to the prediction directory: `cd Mutagenesis_and_Predictions/scripts`. Execute the following scripts sequentially:  
+Navigate to the prediction directory: `cd Mutagenesis_and_Predictions/scripts`. Execute the following scripts sequentially:
 
-- `python make_mutants.py` – generates all single‑point mutants in amyloidogenic regions of Aβ39.  
-- `python Aggregation_ranking.py` – runs the consensus aggregation propensity predictor.  
+- `python make_mutants.py` – generates all single‑point mutants in amyloidogenic regions of Aβ39.
+- `python Aggregation_ranking.py` – runs the consensus aggregation propensity predictor.
 
 This workflow produces mutant structures and ranks them according to predicted changes in amyloidogenicity using a consensus of established algorithms (TANGO, PASTA 2.0, AmyPred, and CrossBeta).
 
@@ -42,41 +42,41 @@ This workflow produces mutant structures and ranks them according to predicted c
 
 All MD protocols are automated via GNU Make within the `MD/` directory.
 
-**Example for the wild‑type monomer:**  
-`cd MD/MD_monomers/WT`  
-`make -j2 all` – full pipeline (setup + production MD).  
+**Example for the wild‑type monomer:**
+`cd MD/MD_monomers/WT`
+`make -j2 all` – full pipeline (setup + production MD).
 
-Alternatively, step‑by‑step:  
-`make setup` – topology, solvation, energy minimization, equilibration.  
-`make run_md` – production MD run.  
-`make process` – trajectory processing.  
-`make protein_only` – generate a protein‑only trajectory (no solvent).  
+Alternatively, step‑by‑step:
+`make setup` – topology, solvation, energy minimization, equilibration.
+`make run_md` – production MD run.
+`make process` – trajectory processing.
+`make protein_only` – generate a protein‑only trajectory (no solvent).
 
 Repeat the procedure for selected mutant in both monomeric and tetrameric systems located in `MD/MD_monomers/` and `MD/MD_tetramers/`. Detailed protocols are provided in the respective `README.md` files and the `Makefile` in each subdirectory.
 
 ## 4. Results Analysis
 
-Processed trajectories are available in `results/XTCs_and_TPRs/NO_SOL/`.  
+Processed trajectories are available in `results/XTCs_and_TPRs/NO_SOL/`.
 
-Launch the analysis notebooks: `cd results/notebooks` and `jupyter lab`.  
+Launch the analysis notebooks: `cd results/notebooks` and `jupyter lab`.
 
-**Key notebooks:**  
-- `Monomers_analysis.ipynb` – analysis of monomeric systems (RMSD, RMSF, Rg, SASA).  
-- `Tetramers_analysis.ipynb` – analysis of tetrameric assemblies (inter‑chain contacts, oligomer stability).  
+**Key notebooks:**
+- `Monomers_analysis.ipynb` – analysis of monomeric systems (RMSD, RMSF, Rg, SASA).
+- `Tetramers_analysis.ipynb` – analysis of tetrameric assemblies (inter‑chain contacts, oligomer stability).
 
 These notebooks reproduce all figures presented in the study.
 
-**Visualisation materials:**  
-- `images/` – high‑resolution figures for publication.  
+**Visualisation materials:**
+- `images/` – high‑resolution figures for publication.
 - `gifs/` – animated trajectories demonstrating structural dynamics.
 
 ## Reproducibility Pipeline Summary
 
-1. Set up the computational environment as described above.  
-2. Generate mutants and compute aggregation predictions.  
-3. Perform molecular dynamics simulations for selected systems.  
-4. Process trajectories using the provided `Makefile` targets.  
-5. Execute the analysis notebooks in `results/notebooks/`.  
+1. Set up the computational environment as described above.
+2. Generate mutants and compute aggregation predictions.
+3. Perform molecular dynamics simulations for selected systems.
+4. Process trajectories using the provided `Makefile` targets.
+5. Execute the analysis notebooks in `results/notebooks/`.
 
 All simulation parameters and analysis scripts are included to ensure full reproducibility.
 

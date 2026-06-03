@@ -44,7 +44,7 @@ mamba activate md_analysis
 jupyter notebook
 ```
 Inside the notebook, adjust to your specific protein:
-* MUTATION_NAME variable ("WT", "V180R", etc) 
+* MUTATION_NAME variable ("WT", "V180R", etc)
 * RESIDUE_OFFSET to process the respective trajectory.
 
 ## Cautions needed to be highlighted

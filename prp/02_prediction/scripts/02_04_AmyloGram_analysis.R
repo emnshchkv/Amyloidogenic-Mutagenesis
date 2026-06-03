@@ -5,7 +5,7 @@ library(tidyverse)
 
 # --- Configuration ---
 # Path to the input FASTA file
-fasta_file <- "../data/prp_sequences.fasta" 
+fasta_file <- "../data/prp_sequences.fasta"
 wt_name <- "WT" # Specify the exact name of the wild-type sequence
 
 # Check if the FASTA file exists
@@ -14,7 +14,7 @@ if (!file.exists(fasta_file)) {
 }
 
 # --- Data Reading and Prediction ---
-# Read sequences. seqinr reads sequences as a list of character vectors, 
+# Read sequences. seqinr reads sequences as a list of character vectors,
 # which is ideal for the predict() function in AmyloGram.
 seqs <- read.fasta(fasta_file, seqtype = "AA")
 
@@ -65,8 +65,8 @@ write_csv(df_amylo, "../data/amylogram_results.csv")
 # --- Waterfall Plot Generation ---
 waterfall_plot_amylo <- ggplot(df_amylo, aes(x = mutation, y = delta_prob, fill = effect)) +
   geom_bar(stat = "identity", width = 0.8) +
-  scale_fill_manual(values = c("Reduced Amyloidogenicity" = "blue", 
-                               "Increased Amyloidogenicity" = "red", 
+  scale_fill_manual(values = c("Reduced Amyloidogenicity" = "blue",
+                               "Increased Amyloidogenicity" = "red",
                                "Neutral" = "#9E9E9E")) +
   theme_minimal() +
   theme(

@@ -17,7 +17,7 @@ This step focuses on generating a library of mutant sequences and preparing them
 All scripts must be executed from the `results/01_mutagenesis/scripts/` subdirectory to ensure relative paths resolve correctly.
 
 ### 1. Generating Mutants
-Run `01_01_generate_mutants.py` to create the mutation library. 
+Run `01_01_generate_mutants.py` to create the mutation library.
 By default, the script uses the breaker amino acids P, D, E, K, and R, and saves the output in the same directory as the input file with the name `prp_sequences.fasta`.
 
 **Standard execution:**

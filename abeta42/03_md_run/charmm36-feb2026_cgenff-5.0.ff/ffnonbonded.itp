@@ -2,16 +2,16 @@
 ; created with charmm2gmx version 1.0.4.dev2+gfb5404623 on 2026-02-26 12:16:57.811785
 ; Code: https://gitlab.com/awacha/charmm2gmx
 ; Documentation: https://awacha.gitlab.com/charmm2gmx
-; Citation: András F. Wacha and Justin A. Lemkul: "charmm2gmx: An Automated 
+; Citation: András F. Wacha and Justin A. Lemkul: "charmm2gmx: An Automated
 ;      Method to Port the CHARMM Additive Force Field to GROMACS". Journal of
 ;      Chemical Information and Modeling 2023, 63(14), 4246-4252.
 ;      DOI: 10.1021/acs.jcim.3c00860
 ;
 ; Charmm2GMX written by András Wacha and Justin Lemkul, based on the original
-; port by E. Prabhu Raman, Justin A. Lemkul, Robert Best and Alexander D. 
+; port by E. Prabhu Raman, Justin A. Lemkul, Robert Best and Alexander D.
 ; MacKerell, Jr.
-; The following files were used: 
-; 
+; The following files were used:
+;
 ; ../toppar_c36_releases/charmm/toppar/metals/CHARMM_METAL/par_all22_prot_metals.inp
 ; ../toppar_c36_releases/charmm/toppar/metals/CHARMM_METAL/top_all22_prot_metals.inp
 ; ../toppar_c36_releases/charmm/toppar/par_all35_ethers.prm
@@ -50,7 +50,7 @@
 
 [ atomtypes ]
 
-; from file 
+; from file
 ; type atnum         mass   charge ptype           sigma  epsilon
 
 ; from file ../toppar_c36_releases/charmm/toppar/metals/CHARMM_METAL/par_all22_prot_metals.inp
@@ -486,14 +486,14 @@ SG2R50    16    32.060000    0.000     A  0.356359487256  1.8828000  ; THIP, thi
 
 ; from file ../toppar_c36_releases/charmm/toppar/stream/carb/toppar_all36_carb_lignin.str
 ; type atnum         mass   charge ptype           sigma  epsilon
- HLGA1     1     1.008000    0.000     A  0.238760856462  0.1882800  ; 
- HLGA2     1     1.008000    0.000     A  0.238760856462  0.1464400  ; 
- HLGA3     1     1.008000    0.000     A  0.238760856462  0.1004160  ; 
- HLGA4     1     1.008000    0.000     A  0.222724679535  0.1297040  ; 
- HLGP1     1     1.008000    0.000     A  0.040001352445  0.1924640  ; 
-HLGR52     1     1.008000    0.000     A  0.160361769265  0.1924640  ; 
-HLGR61     1     1.008000    0.000     A  0.242003727796  0.1255200  ; 
-HLGR62     1     1.008000    0.000     A  0.195997717991  0.1924640  ; 
+ HLGA1     1     1.008000    0.000     A  0.238760856462  0.1882800  ;
+ HLGA2     1     1.008000    0.000     A  0.238760856462  0.1464400  ;
+ HLGA3     1     1.008000    0.000     A  0.238760856462  0.1004160  ;
+ HLGA4     1     1.008000    0.000     A  0.222724679535  0.1297040  ;
+ HLGP1     1     1.008000    0.000     A  0.040001352445  0.1924640  ;
+HLGR52     1     1.008000    0.000     A  0.160361769265  0.1924640  ;
+HLGR61     1     1.008000    0.000     A  0.242003727796  0.1255200  ;
+HLGR62     1     1.008000    0.000     A  0.195997717991  0.1924640  ;
  CLG01     6    12.011000    0.000     A  0.372395664183  0.2845120  ; CLG2DC1
  CLG02     6    12.011000    0.000     A  0.372395664183  0.2845120  ; CLG2DC2
  CLG03     6    12.011000    0.000     A  0.302905564168  0.4100320  ; CLG2O2
@@ -544,10 +544,10 @@ CLG06B     6    12.011000    0.000     A  0.355005321205  0.2928800  ; CLG2R6B
 
 ; from file ../toppar_c36_releases/charmm/toppar/stream/lipid/toppar_all36_lipid_sphingo.str
 ; type atnum         mass   charge ptype           sigma  epsilon
-  CEL3     6    12.011000    0.000     A  0.372395664183  0.2845120  ; 
-  CTO1     6    12.011000    0.000     A  0.405358916754  0.0836800  ; 
-  CTO2     6    12.011000    0.000     A  0.358141284692  0.2343040  ; 
-   NHL     7    14.007000    0.000     A  0.329632525712  0.8368000  ; 
+  CEL3     6    12.011000    0.000     A  0.372395664183  0.2845120  ;
+  CTO1     6    12.011000    0.000     A  0.405358916754  0.0836800  ;
+  CTO2     6    12.011000    0.000     A  0.358141284692  0.2343040  ;
+   NHL     7    14.007000    0.000     A  0.329632525712  0.8368000  ;
 
 ; from file ../toppar_c36_releases/charmm/toppar/stream/misc/toppar_ions_won.str
 ; type atnum         mass   charge ptype           sigma  epsilon

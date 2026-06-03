@@ -32,7 +32,7 @@ all_results <- appnn(sequences)
 wt_idx <- which(seq_names == wt_name)
 if (length(wt_idx) == 0) {
   warning("Warning: Wild-type sequence not found by name. Using the first sequence as WT.")
-  wt_idx <- 1 
+  wt_idx <- 1
 }
 
 # Extract amyloid propensity and calculate the mean for the target window
@@ -46,18 +46,18 @@ summary_list <- vector("list", length(all_results))
 
 for (i in seq_along(all_results)) {
   current_aminoacids <- all_results[[i]]$aminoacids
-  
+
   # Check length to avoid out-of-bounds errors (APPNN output might be shorter)
   window_end <- min(end_pos, length(current_aminoacids))
   local_window <- current_aminoacids[start_pos:window_end]
-  
+
   if (length(local_window) > 0) {
     m_max <- max(local_window, na.rm = TRUE)
     m_mean <- mean(local_window, na.rm = TRUE)
-    
+
     # Delta: negative value means a decrease in aggregation potential
     delta_mean <- m_mean - wt_mean
-    
+
     # Store results in a tibble for the list
     summary_list[[i]] <- tibble(
       mutation = seq_names[i],
@@ -100,8 +100,8 @@ write_csv(df_appnn, "../data/appnn_results.csv")
 # --- Waterfall Plot Generation ---
 waterfall_plot <- ggplot(df_appnn, aes(x = mutation, y = delta_mean, fill = effect)) +
   geom_bar(stat = "identity", width = 0.8) +
-  scale_fill_manual(values = c("Reduced Amyloidogenicity" = "blue", 
-                               "Increased Amyloidogenicity" = "red", 
+  scale_fill_manual(values = c("Reduced Amyloidogenicity" = "blue",
+                               "Increased Amyloidogenicity" = "red",
                                "Neutral" = "#9E9E9E")) +
   theme_minimal() +
   theme(

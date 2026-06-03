@@ -215,8 +215,15 @@ def draw_top10(ax, idx_list, tool, direction, color, zscore):
         ha = "left" if v >= 0 else "right"
         off = 0.05 if v >= 0 else -0.05
         ax.text(
-            v + off, i, f"{v:+.2f}", ha=ha, va="center",
-            fontsize=6.5, fontfamily="monospace", color=TEXT, alpha=0.85,
+            v + off,
+            i,
+            f"{v:+.2f}",
+            ha=ha,
+            va="center",
+            fontsize=6.5,
+            fontfamily="monospace",
+            color=TEXT,
+            alpha=0.85,
         )
 
     ax.axvline(0, color=WT_COL, lw=0.8, linestyle="--", alpha=0.4, zorder=1)
@@ -229,12 +236,19 @@ def draw_top10(ax, idx_list, tool, direction, color, zscore):
         sp.set_edgecolor("#1e2540")
 
     ax.set_title(
-        tool, color=TOOL_COLORS[tool], fontsize=10,
-        fontfamily="monospace", fontweight="bold", pad=8,
+        tool,
+        color=TOOL_COLORS[tool],
+        fontsize=10,
+        fontfamily="monospace",
+        fontweight="bold",
+        pad=8,
     )
     ax.set_xlabel(
-        "z-score (within tool)", color=MUTED, fontsize=7.5,
-        fontfamily="monospace", labelpad=4,
+        "z-score (within tool)",
+        color=MUTED,
+        fontsize=7.5,
+        fontfamily="monospace",
+        labelpad=4,
     )
     ax.xaxis.set_major_locator(MaxNLocator(5))
 
@@ -264,8 +278,13 @@ def plot_selected_variants(variants_list, title, filename, zscore, tools, fig_di
 
     for i, tool in enumerate(tools):
         ax.bar(
-            x + offsets[i], df_plot[tool], width, label=tool,
-            color=TOOL_COLORS[tool], edgecolor="none", alpha=0.9,
+            x + offsets[i],
+            df_plot[tool],
+            width,
+            label=tool,
+            color=TOOL_COLORS[tool],
+            edgecolor="none",
+            alpha=0.9,
         )
 
     ax.axhline(0, color=WT_COL, lw=1, linestyle="--", alpha=0.6)
@@ -278,12 +297,21 @@ def plot_selected_variants(variants_list, title, filename, zscore, tools, fig_di
         sp.set_edgecolor("#1e2540")
 
     ax.legend(
-        loc="upper right", frameon=True, framealpha=0.2,
-        edgecolor=MUTED, facecolor=BG, fontsize=9, labelcolor=TEXT,
+        loc="upper right",
+        frameon=True,
+        framealpha=0.2,
+        edgecolor=MUTED,
+        facecolor=BG,
+        fontsize=9,
+        labelcolor=TEXT,
     )
     ax.set_title(
-        title, color=TEXT, fontsize=12,
-        fontfamily="monospace", fontweight="bold", pad=12,
+        title,
+        color=TEXT,
+        fontsize=12,
+        fontfamily="monospace",
+        fontweight="bold",
+        pad=12,
     )
 
     fig.tight_layout()
@@ -339,8 +367,13 @@ def plot_consensus_ranking(raw, n, fig_dir):
     labels = [short_name(name) for name in cons_sorted.index]
     colors_bar = [AGG_COL if v >= 0 else DIS_COL for v in cons_sorted.values]
 
-    bars = ax0.bar(range(len(cons_sorted)), cons_sorted.values,
-                   color=colors_bar, width=0.75, zorder=2)
+    bars = ax0.bar(
+        range(len(cons_sorted)),
+        cons_sorted.values,
+        color=colors_bar,
+        width=0.75,
+        zorder=2,
+    )
 
     for i, v in enumerate(cons_sorted.values):
         if i < 10 or i >= len(cons_sorted) - 10:
@@ -355,41 +388,79 @@ def plot_consensus_ranking(raw, n, fig_dir):
         if i < 10 or i >= len(cons_sorted) - 10:
             va = "bottom" if v >= 0 else "top"
             off = 0.04 if v >= 0 else -0.04
-            ax0.text(i, v + off, label, ha="center", va=va, fontsize=6.2,
-                     fontfamily="monospace", color=ACC_COL, rotation=90,
-                     fontweight="bold")
+            ax0.text(
+                i,
+                v + off,
+                label,
+                ha="center",
+                va=va,
+                fontsize=6.2,
+                fontfamily="monospace",
+                color=ACC_COL,
+                rotation=90,
+                fontweight="bold",
+            )
 
     ax0.set_xlim(-0.8, len(cons_sorted) - 0.2)
     ax0.set_xticks([])
-    ax0.set_ylabel("Consensus z-score", color=MUTED, fontsize=9.5,
-                   fontfamily="monospace", labelpad=6)
+    ax0.set_ylabel(
+        "Consensus z-score",
+        color=MUTED,
+        fontsize=9.5,
+        fontfamily="monospace",
+        labelpad=6,
+    )
     ax0.set_title(
         f"Aβ39 · Consensus Ranking of All {n} Variants\n"
         "Consensus = average z-score across four tools",
-        color=TEXT, fontsize=12, fontfamily="monospace", fontweight="bold", pad=15,
+        color=TEXT,
+        fontsize=12,
+        fontfamily="monospace",
+        fontweight="bold",
+        pad=15,
     )
 
     agg_p = mpatches.Patch(color=AGG_COL, label="Increased aggregation")
     dis_p = mpatches.Patch(color=DIS_COL, label="Decreased aggregation")
-    top_p = mpatches.Patch(facecolor="none", edgecolor=ACC_COL, lw=1.5,
-                           label="Top-10 (highlighted)")
-    ax0.legend(handles=[agg_p, dis_p, top_p], loc="upper right",
-               frameon=True, framealpha=0.25, edgecolor=MUTED,
-               facecolor=BG, fontsize=9, labelcolor=TEXT)
+    top_p = mpatches.Patch(
+        facecolor="none", edgecolor=ACC_COL, lw=1.5, label="Top-10 (highlighted)"
+    )
+    ax0.legend(
+        handles=[agg_p, dis_p, top_p],
+        loc="upper right",
+        frameon=True,
+        framealpha=0.25,
+        edgecolor=MUTED,
+        facecolor=BG,
+        fontsize=9,
+        labelcolor=TEXT,
+    )
 
     fig1.tight_layout(pad=1.8)
-    fig1.savefig(fig_dir / "Aβ39_ranking_consensus.png", dpi=170,
-                 bbox_inches="tight", facecolor=BG)
+    fig1.savefig(
+        fig_dir / "Aβ39_ranking_consensus.png",
+        dpi=170,
+        bbox_inches="tight",
+        facecolor=BG,
+    )
     print("Saved: Aβ39_ranking_consensus.png")
     plt.close(fig1)
 
 
-def plot_top10_panels(zscore, tools, top10, direction, suptitle, color, filename, fig_dir):
+def plot_top10_panels(
+    zscore, tools, top10, direction, suptitle, color, filename, fig_dir
+):
     """Four-panel top-10 figure (aggregators or disruptors)."""
     fig, axes = plt.subplots(1, 4, figsize=(20, 7.5), facecolor=BG)
     fig.subplots_adjust(wspace=0.45, left=0.06, right=0.96, top=0.85, bottom=0.12)
-    fig.suptitle(suptitle, color=color, fontsize=13,
-                 fontfamily="monospace", fontweight="bold", y=0.96)
+    fig.suptitle(
+        suptitle,
+        color=color,
+        fontsize=13,
+        fontfamily="monospace",
+        fontweight="bold",
+        y=0.96,
+    )
     for ax, tool in zip(axes, tools):
         draw_top10(ax, top10[tool], tool, direction, TOOL_COLORS[tool], zscore)
     fig.savefig(fig_dir / filename, dpi=170, bbox_inches="tight", facecolor=BG)
@@ -440,25 +511,41 @@ def main():
 
     plot_consensus_ranking(raw, n, fig_dir)
     plot_top10_panels(
-        zscore, tools, top10_agg, "agg",
+        zscore,
+        tools,
+        top10_agg,
+        "agg",
         "Aβ39 · Top-10 Aggregators by Individual Tool\n(z-score within each predictor)",
-        AGG_COL, "Aβ39_top10_aggregators.png", fig_dir,
+        AGG_COL,
+        "Aβ39_top10_aggregators.png",
+        fig_dir,
     )
     plot_top10_panels(
-        zscore, tools, top10_dis, "dis",
+        zscore,
+        tools,
+        top10_dis,
+        "dis",
         "Aβ39 · Top-10 Disruptors by Individual Tool\n(z-score within each predictor)",
-        DIS_COL, "Aβ39_top10_disruptors.png", fig_dir,
+        DIS_COL,
+        "Aβ39_top10_disruptors.png",
+        fig_dir,
     )
 
     plot_selected_variants(
         ["E3G", "E22Q", "R5L", "E3Q", "R5Q", "V12I"],
-        "Aβ39 · Selected Aggregators", "Aβ39_selected_aggregators.png",
-        zscore, tools, fig_dir,
+        "Aβ39 · Selected Aggregators",
+        "Aβ39_selected_aggregators.png",
+        zscore,
+        tools,
+        fig_dir,
     )
     plot_selected_variants(
         ["G25D", "H13P", "G25S", "R5P", "H6R", "H6Q"],
-        "Aβ39 · Selected Disruptors", "Aβ39_selected_disruptors.png",
-        zscore, tools, fig_dir,
+        "Aβ39 · Selected Disruptors",
+        "Aβ39_selected_disruptors.png",
+        zscore,
+        tools,
+        fig_dir,
     )
 
     print("\nAnalysis completed successfully.")

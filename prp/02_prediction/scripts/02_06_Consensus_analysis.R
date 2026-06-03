@@ -17,7 +17,7 @@ required_files <- c(pasta_file, tango_file, appnn_file, amylo_file, aggre_file)
 missing_files <- required_files[!file.exists(required_files)]
 
 if (length(missing_files) > 0) {
-  stop(paste("Error: Missing required CSV files. Please run the respective scripts first. Missing:", 
+  stop(paste("Error: Missing required CSV files. Please run the respective scripts first. Missing:",
              paste(basename(missing_files), collapse = ", ")))
 }
 
@@ -77,7 +77,7 @@ write_csv(df_scored, "../data/consensus_results.csv")
 # --- Visualization ---
 
 # Plot 1: Waterfall plot of the integrative score
-waterfall_consensus <- ggplot(df_scored, aes(x = mutation, y = Integrative_Score, 
+waterfall_consensus <- ggplot(df_scored, aes(x = mutation, y = Integrative_Score,
                                              fill = Integrative_Score < 0)) +
   geom_bar(stat = "identity", width = 0.8) +
   scale_fill_manual(values = c("TRUE" = "blue", "FALSE" = "red"), guide = "none") +
@@ -100,7 +100,7 @@ top_30_muts <- head(df_scored$mutation, 30)
 
 df_heatmap <- df_scored %>%
   filter(mutation %in% top_30_muts) %>%
-  select(mutation, PASTA2.0 = z_pasta, TANGO = z_tango, AmyloGram = z_amylo, 
+  select(mutation, PASTA2.0 = z_pasta, TANGO = z_tango, AmyloGram = z_amylo,
          AGGRESCAN = z_aggre, APPNN = z_appnn) %>%
   pivot_longer(cols = -mutation, names_to = "Tool", values_to = "Z_Score")
 
