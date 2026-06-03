@@ -4,21 +4,39 @@ Aβ39 Variant Aggregation Propensity Analysis
 ============================================
 
 Consensus analysis of Aβ39 peptide variants across four aggregation predictors
-(TANGO, PASTA, AmyPred-FRL, CrossBeta): per-tool z-score normalisation, a
+(TANGO, PASTA 2.0, AmyPred-FRL, CrossBeta): per-tool z-score normalisation, a
 consensus score, identification of top aggregators/disruptors, and figures.
 
-This is the loader-refactored version. The four per-tool readers previously
-duplicated the same `for _, row in df.iterrows()` loop; they now share one
-vectorised loader. At 65–465 variants this is not a speed fix (the loops cost
-microseconds) — it removes ~40 lines of duplicated branching and the WT-skip
-logic, which is the readability point the reviewers raised. The plotting code
-below still uses iterrows for per-bar text annotation, which is the idiomatic
-use and is left unchanged.
+Path handling (v1.2)
+--------------------
+All input/output locations are resolved relative to the *script's own location*
+(via ``__file__``), not the current working directory, and can be overridden on
+the command line. The script therefore runs correctly from anywhere:
+
+    python Aggregation_ranking.py
+    python scripts/Aggregation_ranking.py
+    python abeta39/02_prediction/scripts/Aggregation_ranking.py --data-dir ... --fig-dir ...
+
+Defaults assume the post-restructure layout
+``02_prediction/{scripts,data,figures}/`` — i.e. ``../data`` and ``../figures``
+relative to this file. Earlier versions hard-coded ``../tools_assessment`` for
+inputs and a mix of ``../../images`` and ``../figures`` for outputs; both are
+now single configurable roots.
+
+Loader design (v1.1)
+---------------------
+The four per-tool readers share one vectorised ``load_predictor``. At 65–465
+variants this is not a speed fix (the loops cost microseconds) — it removes the
+duplicated WT-skip branching. Plotting code still uses ``iterrows`` for per-bar
+text annotation, which is the idiomatic use and is left unchanged.
 
 Author: Sergey Ilin
 Date: May 2026
-Version: 1.1
+Version: 1.2
 """
+
+import argparse
+from pathlib import Path
 
 import matplotlib
 import matplotlib.patches as mpatches
@@ -26,6 +44,22 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 from matplotlib.ticker import MaxNLocator
+
+# ========================== PATH DEFAULTS (anchored to this file) =============
+
+SCRIPT_DIR = Path(__file__).resolve().parent
+# scripts/ sits inside the step folder, so the step root is the parent.
+DEFAULT_DATA_DIR = SCRIPT_DIR.parent / "data"
+DEFAULT_FIG_DIR = SCRIPT_DIR.parent / "figures"
+
+# Input file names within the data directory. Centralised so a layout change
+# touches one place, not four call sites.
+INPUT_FILES = {
+    "tango": "TANGO.txt",
+    "pasta": "pasta.csv",
+    "amypred": "amypred.csv",
+    "crossbeta": "crossbeta.csv",
+}
 
 # ========================== PLOT STYLE CONFIGURATION ==========================
 
@@ -71,7 +105,7 @@ def short_name(full_name: str) -> str:
 
 
 def load_predictor(
-    path: str,
+    path: Path,
     name_col: str,
     value_col: str,
     out_col: str,
@@ -93,6 +127,7 @@ def load_predictor(
 
     Parameters
     ----------
+    path                : path to the predictor's output table.
     name_col, value_col : the columns holding the variant name and the score.
     out_col             : the name to give the score column in the result.
     delta_from_wt       : subtract the WT score from every variant (TANGO,
@@ -119,10 +154,10 @@ def load_predictor(
     return out.set_index("variant")
 
 
-def load_all_tools() -> pd.DataFrame:
+def load_all_tools(data_dir: Path) -> pd.DataFrame:
     """Load and merge all four predictors on the shared variant index."""
     tango = load_predictor(
-        "../tools_assessment/TANGO.txt",
+        data_dir / INPUT_FILES["tango"],
         name_col="Sequence",
         value_col="Aggregation",
         out_col="TANGO",
@@ -130,20 +165,20 @@ def load_all_tools() -> pd.DataFrame:
         coerce_numeric=True,
     )
     pasta = load_predictor(
-        "../tools_assessment/pasta.csv",
+        data_dir / INPUT_FILES["pasta"],
         name_col="Protein name",
         value_col="Best Energy",
         out_col="PASTA",
         sep=";",
     )
     amypred = load_predictor(
-        "../tools_assessment/amypred.csv",
+        data_dir / INPUT_FILES["amypred"],
         name_col="Name",
         value_col="Probability",
         out_col="AmyPred-FRL",
     )
     crossbeta = load_predictor(
-        "../tools_assessment/crossbeta.csv",
+        data_dir / INPUT_FILES["crossbeta"],
         name_col="Query_name",
         value_col="Average_protein_prediction",
         out_col="CrossBeta",
@@ -204,7 +239,7 @@ def draw_top10(ax, idx_list, tool, direction, color, zscore):
     ax.xaxis.set_major_locator(MaxNLocator(5))
 
 
-def plot_selected_variants(variants_list, title, filename, zscore, tools):
+def plot_selected_variants(variants_list, title, filename, zscore, tools, fig_dir):
     """Plot grouped bar chart for manually selected variants."""
     full_names = ["abeta39_" + v for v in variants_list]
     existing = [name for name in full_names if name in zscore.index]
@@ -252,7 +287,7 @@ def plot_selected_variants(variants_list, title, filename, zscore, tools):
     )
 
     fig.tight_layout()
-    fig.savefig("../../images/" + filename, dpi=170, bbox_inches="tight", facecolor=BG)
+    fig.savefig(fig_dir / filename, dpi=170, bbox_inches="tight", facecolor=BG)
     print(f"Saved: {filename}")
     plt.close(fig)
 
@@ -295,7 +330,7 @@ def print_text_summary(zscore, raw, tools, top10_agg, top10_dis):
             )
 
 
-def plot_consensus_ranking(raw, n):
+def plot_consensus_ranking(raw, n, fig_dir):
     """Full-width consensus ranking bar chart."""
     fig1, ax0 = plt.subplots(figsize=(20, 7.5), facecolor=BG)
     ax0.set_facecolor(SURFACE)
@@ -343,13 +378,13 @@ def plot_consensus_ranking(raw, n):
                facecolor=BG, fontsize=9, labelcolor=TEXT)
 
     fig1.tight_layout(pad=1.8)
-    fig1.savefig("../../images/Aβ39_ranking_consensus.png", dpi=170,
+    fig1.savefig(fig_dir / "Aβ39_ranking_consensus.png", dpi=170,
                  bbox_inches="tight", facecolor=BG)
     print("Saved: Aβ39_ranking_consensus.png")
     plt.close(fig1)
 
 
-def plot_top10_panels(zscore, tools, top10, direction, suptitle, color, filename):
+def plot_top10_panels(zscore, tools, top10, direction, suptitle, color, filename, fig_dir):
     """Four-panel top-10 figure (aggregators or disruptors)."""
     fig, axes = plt.subplots(1, 4, figsize=(20, 7.5), facecolor=BG)
     fig.subplots_adjust(wspace=0.45, left=0.06, right=0.96, top=0.85, bottom=0.12)
@@ -357,13 +392,41 @@ def plot_top10_panels(zscore, tools, top10, direction, suptitle, color, filename
                  fontfamily="monospace", fontweight="bold", y=0.96)
     for ax, tool in zip(axes, tools):
         draw_top10(ax, top10[tool], tool, direction, TOOL_COLORS[tool], zscore)
-    fig.savefig(f"../../images/{filename}", dpi=170, bbox_inches="tight", facecolor=BG)
+    fig.savefig(fig_dir / filename, dpi=170, bbox_inches="tight", facecolor=BG)
     print(f"Saved: {filename}")
     plt.close(fig)
 
 
+def parse_args() -> argparse.Namespace:
+    parser = argparse.ArgumentParser(
+        description="Aβ39 consensus aggregation-propensity ranking.",
+        formatter_class=argparse.ArgumentDefaultsHelpFormatter,
+    )
+    parser.add_argument(
+        "--data-dir",
+        type=Path,
+        default=DEFAULT_DATA_DIR,
+        help="directory holding the four predictor output tables",
+    )
+    parser.add_argument(
+        "--fig-dir",
+        type=Path,
+        default=DEFAULT_FIG_DIR,
+        help="directory where figures are written (created if missing)",
+    )
+    return parser.parse_args()
+
+
 def main():
-    raw = load_all_tools().dropna()
+    args = parse_args()
+    data_dir = args.data_dir.resolve()
+    fig_dir = args.fig_dir.resolve()
+    fig_dir.mkdir(parents=True, exist_ok=True)
+
+    print(f"Reading predictor tables from : {data_dir}")
+    print(f"Writing figures to            : {fig_dir}\n")
+
+    raw = load_all_tools(data_dir).dropna()
     n = len(raw)
     print(f"Loaded {n} variants common to all four prediction tools.\n")
 
@@ -375,25 +438,27 @@ def main():
 
     print_text_summary(zscore, raw, tools, top10_agg, top10_dis)
 
-    plot_consensus_ranking(raw, n)
+    plot_consensus_ranking(raw, n, fig_dir)
     plot_top10_panels(
         zscore, tools, top10_agg, "agg",
         "Aβ39 · Top-10 Aggregators by Individual Tool\n(z-score within each predictor)",
-        AGG_COL, "Aβ39_top10_aggregators.png",
+        AGG_COL, "Aβ39_top10_aggregators.png", fig_dir,
     )
     plot_top10_panels(
         zscore, tools, top10_dis, "dis",
         "Aβ39 · Top-10 Disruptors by Individual Tool\n(z-score within each predictor)",
-        DIS_COL, "Aβ39_top10_disruptors.png",
+        DIS_COL, "Aβ39_top10_disruptors.png", fig_dir,
     )
 
     plot_selected_variants(
         ["E3G", "E22Q", "R5L", "E3Q", "R5Q", "V12I"],
-        "Aβ39 · Selected Aggregators", "Aβ39_selected_aggregators.png", zscore, tools,
+        "Aβ39 · Selected Aggregators", "Aβ39_selected_aggregators.png",
+        zscore, tools, fig_dir,
     )
     plot_selected_variants(
         ["G25D", "H13P", "G25S", "R5P", "H6R", "H6Q"],
-        "Aβ39 · Selected Disruptors", "Aβ39_selected_disruptors.png", zscore, tools,
+        "Aβ39 · Selected Disruptors", "Aβ39_selected_disruptors.png",
+        zscore, tools, fig_dir,
     )
 
     print("\nAnalysis completed successfully.")
