@@ -1,0 +1,32 @@
+; minim.mdp — Energy Minimization (Aβ39)
+; ========================================
+; System: Aβ39 monomer, CHARMM36m / CHARMM-TIP3P / 150 mM NaCl
+;
+; IDENTICAL TO Aβ42 MINIMIZATION:
+; The energy minimization protocol is system-agnostic for same-force-field
+; simulations. All CHARMM36m nonbonded parameters (PME, VdW switching,
+; cutoffs) are force-field-defined constants, not system-dependent choices.
+; The only parameter that might need adjustment is emtol (force threshold)
+; for very large or poorly prepared systems.
+
+integrator          = steep
+emtol               = 500.0
+emstep              = 0.01
+nsteps              = 10000
+
+cutoff-scheme       = Verlet
+verlet-buffer-tolerance = 0.005
+nstlist             = 1
+pbc                 = xyz
+
+coulombtype         = PME
+rcoulomb            = 1.2
+fourierspacing      = 0.12
+pme-order           = 4
+ewald-rtol          = 1e-5
+
+vdwtype             = cutoff
+vdw-modifier        = force-switch
+rvdw                = 1.2
+rvdw-switch         = 1.0
+DispCorr            = no

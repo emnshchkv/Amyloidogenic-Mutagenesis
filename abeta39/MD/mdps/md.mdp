@@ -1,0 +1,77 @@
+; md.mdp — Production MD (Aβ39)
+; ================================
+; System: Aβ39 monomer, CHARMM36m / CHARMM-TIP3P / 150 mM NaCl
+; Duration: 500 ns (250,000,000 steps × 2 fs)
+; Ensemble: NPT at 310 K, 1 bar
+;
+; Aβ39-SPECIFIC SIMULATION LENGTH RATIONALE:
+; Despite being 3 residues shorter than Aβ42, Aβ39 occupies a
+; comparably vast conformational landscape as an IDP. The C-terminal
+; truncation removes Val40-Ile41-Ala42, a hydrophobic stretch that
+; in Aβ42 facilitates both intramolecular contacts (hairpin turns in
+; the CHC–C-terminal region) and intermolecular aggregation.
+;
+; Biologically, Aβ39 is the least amyloidogenic of the major Aβ
+; isoforms (Aβ38/39/40/42), with slower aggregation kinetics and
+; distinct oligomer morphologies. In monomeric MD, you may observe:
+;   • Less β-hairpin formation in the C-terminal region
+;   • More extended/disordered C-terminal tail
+;   • Different salt-bridge patterns (loss of Ile41–Glu22 contact)
+;
+; 500 ns × 3 replicas remains appropriate. The slightly smaller
+; conformational space (3 fewer residues) does not meaningfully
+; reduce the sampling requirements.
+;
+; COMPARATIVE ANALYSIS TIP: If students simulate both Aβ42 and Aβ39,
+; compare Rg distributions, secondary structure propensity per residue,
+; and contact maps. Key differences should emerge in residues 28–39
+; (the C-terminal region) and in long-range contacts involving the
+; central hydrophobic cluster (CHC, residues 17–21).
+
+integrator          = md
+dt                  = 0.002
+nsteps              = 80000000  ; 100 ns
+continuation        = yes
+
+nstxout             = 0
+nstvout             = 0
+nstfout             = 0
+nstxout-compressed  = 5000       ; Every 10 ps
+nstenergy           = 5000
+nstlog              = 5000
+compressed-x-grps   = System
+
+cutoff-scheme       = Verlet
+verlet-buffer-tolerance = 0.005
+nstlist             = 20
+pbc                 = xyz
+
+coulombtype         = PME
+rcoulomb            = 1.2
+fourierspacing      = 0.12
+pme-order           = 4
+ewald-rtol          = 1e-5
+
+vdwtype             = cutoff
+vdw-modifier        = force-switch
+rvdw                = 1.2
+rvdw-switch         = 1.0
+DispCorr            = no
+
+tcoupl              = V-rescale
+tc-grps             = Protein Non-Protein
+tau_t               = 0.1   0.1
+ref_t               = 310   310
+
+pcoupl              = Parrinello-Rahman
+pcoupltype          = isotropic
+tau_p               = 5.0
+ref_p               = 1.0
+compressibility     = 4.5e-5
+
+gen_vel             = no
+
+constraint_algorithm = LINCS
+constraints         = h-bonds
+lincs_iter          = 1
+lincs_order         = 4
