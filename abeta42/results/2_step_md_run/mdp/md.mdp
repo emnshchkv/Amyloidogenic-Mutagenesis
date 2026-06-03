@@ -1,0 +1,103 @@
+; md.mdp — Production MD (Aβ42)
+; ================================
+; Purpose: Unrestrained molecular dynamics to sample the conformational
+; ensemble of the Aβ42 monomer. This is the core scientific output —
+; all subsequent analysis derives from this trajectory.
+;
+; System: Aβ42 monomer, CHARMM36m / CHARMM-TIP3P / 150 mM NaCl
+; Duration: 500 ns (250,000,000 steps × 2 fs)
+; Ensemble: NPT at 310 K, 1 bar
+;
+; IDP-SPECIFIC RATIONALE FOR 500 ns:
+; Aβ42 is an intrinsically disordered peptide that samples a vast
+; conformational landscape. Unlike folded proteins that equilibrate
+; within ~10 ns, IDPs undergo slow interconversions between compact
+; and extended states with timescales of 100s of ns to μs.
+;
+; The helix-to-coil transition of the 1IYT starting structure occurs
+; within ~50–100 ns, but adequate sampling of the disordered ensemble
+; requires much longer trajectories. Published Aβ monomer simulations
+; use 500 ns–10 μs per replica.
+;
+; RECOMMENDED STRATEGY: Run 3–5 independent 500 ns trajectories
+; (different gen_seed values) rather than a single long run. This:
+;   1. Provides independent samples for statistical error estimation
+;   2. Explores more of conformational space (different unfolding paths)
+;   3. Allows detection of trajectory-dependent artifacts
+;   4. Is more efficient on multi-node clusters (embarrassingly parallel)
+;
+; OUTPUT SIZING: At 10 ps intervals for a ~20,000-atom system:
+;   .xtc ≈ 2.5 GB per 500 ns  |  .edr ≈ 200 MB  |  .log ≈ 50 MB
+
+; --- Run control ---
+integrator          = md
+dt                  = 0.002      ; 2 fs (safe with h-bond constraints)
+nsteps              = 80000000  ; 500 ns total
+continuation        = yes        ; Continuing from NPT equilibration
+
+; --- Output control ---
+; Compressed trajectory at 10 ps resolution balances disk space vs
+; analysis resolution. For rare events, consider 5 ps (double storage).
+; Full-precision .trr is unnecessary for structural analysis.
+nstxout             = 0          ; No full-precision coordinates
+nstvout             = 0          ; No velocities (can regenerate from .cpt)
+nstfout             = 0          ; No forces
+nstxout-compressed  = 5000       ; Compressed coords every 10 ps
+nstenergy           = 5000       ; Energies every 10 ps
+nstlog              = 5000       ; Log every 10 ps
+compressed-x-grps   = System    ; Save all atoms (for solvent analysis)
+
+; --- Neighbor searching ---
+cutoff-scheme       = Verlet     ; Automatic buffer with verlet-buffer-tolerance
+nstlist             = 20         ; Pair list update every 40 fs
+pbc                 = xyz
+
+; --- Electrostatics (CHARMM36m — do not modify) ---
+; Particle Mesh Ewald decomposes the 1/r Coulomb potential:
+;   V_total = V_direct(r < rcoulomb) + V_reciprocal(FFT grid)
+; This is essential because electrostatic truncation at finite cutoffs
+; introduces severe artifacts: incorrect pressures, artificial ion ordering,
+; and discontinuous forces. PME achieves O(N log N) scaling.
+coulombtype         = PME
+rcoulomb            = 1.2
+fourierspacing      = 0.12
+pme-order           = 4
+ewald-rtol          = 1e-5
+
+; --- Van der Waals (CHARMM36m — do not modify) ---
+vdwtype             = cutoff
+vdw-modifier        = force-switch
+rvdw                = 1.2
+rvdw-switch         = 1.0
+DispCorr            = no
+
+; --- Temperature coupling ---
+tcoupl              = V-rescale
+tc-grps             = Protein Non-Protein
+tau_t               = 0.1   0.1
+ref_t               = 310   310
+
+; --- Pressure coupling ---
+; Parrinello-Rahman (PRL 1981): Extended-ensemble barostat that treats
+; the box matrix as a dynamical variable with its own equation of motion.
+; Produces correct NPT volume fluctuations (unlike Berendsen/C-rescale
+; which suppress long-wavelength density fluctuations).
+;
+; tau_p = 5.0 ps is the oscillation period of the box, NOT a relaxation
+; time constant. Larger values give smoother pressure but slower response.
+; MUST be used only after pre-equilibration (crashes if started far from
+; equilibrium due to coupled oscillatory dynamics).
+pcoupl              = Parrinello-Rahman
+pcoupltype          = isotropic
+tau_p               = 5.0
+ref_p               = 1.0
+compressibility     = 4.5e-5
+
+; --- Velocity ---
+gen_vel             = no
+
+; --- Bond constraints ---
+constraint_algorithm = LINCS
+constraints         = h-bonds
+lincs_iter          = 1
+lincs_order         = 4
