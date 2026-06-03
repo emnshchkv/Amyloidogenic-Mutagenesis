@@ -1,0 +1,74 @@
+; nvt.mdp — NVT Equilibration (PrP)
+; ===================================
+; System: Human PrP(125–228), CHARMM36m / CHARMM-TIP3P / 150 mM NaCl
+; Duration: 200 ps (100,000 steps × 2 fs)
+; Ensemble: Canonical (NVT)
+;
+; PrP vs Aβ EQUILIBRATION DIFFERENCES:
+; PrP(125–228) is a folded protein with 104 residues (~1600 heavy atoms)
+; versus Aβ42's 42 residues (~630 atoms). Key distinctions:
+;
+; 1. POSITION RESTRAINTS: The standard 1000 kJ/mol/nm² harmonic constant
+;    is applied to ALL heavy atoms. For PrP, this protects the native
+;    α-helical bundle (H1-H2-H3) and β-sheet, which are biologically
+;    meaningful structures that must be preserved during solvent relaxation.
+;    For Aβ, the restraints merely hold an arbitrary starting conformation
+;    that will be released anyway.
+;
+; 2. LONGER NVT: 200 ps (vs 100 ps for Aβ42) because the larger protein
+;    buries more surface area, creating a larger hydration shell that
+;    needs more time to reorganize. The disulfide bond and hydrophobic
+;    core require more careful solvent annealing.
+;
+; 3. BOX SIZE: Use -d 1.2 nm padding (vs 1.5 nm for IDPs) because PrP
+;    maintains a compact fold with Rg ≈ 1.3 nm throughout simulation.
+;    A dodecahedron with 1.2 nm padding gives ~7 nm minimum image
+;    distance, well above the 2.4 nm minimum requirement.
+;
+; 4. DISULFIDE BOND: Already encoded in the topology as a covalent bond.
+;    No special .mdp settings needed — LINCS handles it as a normal bond
+;    (not constrained unless constraints = all-bonds). The bond will
+;    oscillate around its equilibrium length of ~0.204 nm.
+
+define              = -DPOSRES
+integrator          = md
+dt                  = 0.002
+nsteps              = 80000     ; 100 ps — longer for the larger protein
+continuation        = no
+
+nstxout-compressed  = 500
+nstenergy           = 500
+nstlog              = 500
+
+cutoff-scheme       = Verlet
+verlet-buffer-tolerance = 0.005
+nstlist             = 20
+pbc                 = xyz
+
+coulombtype         = PME
+rcoulomb            = 1.2
+fourierspacing      = 0.12
+pme-order           = 4
+ewald-rtol          = 1e-5
+
+vdwtype             = cutoff
+vdw-modifier        = force-switch
+rvdw                = 1.2
+rvdw-switch         = 1.0
+DispCorr            = no
+
+tcoupl              = V-rescale
+tc-grps             = Protein Non-Protein
+tau_t               = 0.1   0.1
+ref_t               = 310   310
+
+pcoupl              = no
+
+gen_vel             = yes
+gen_temp            = 310
+gen_seed            = -1
+
+constraint_algorithm = LINCS
+constraints         = h-bonds
+lincs_iter          = 1
+lincs_order         = 4

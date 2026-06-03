@@ -1,0 +1,63 @@
+; npt.mdp — NPT Equilibration (PrP)
+; ====================================
+; System: Human PrP(125–228), CHARMM36m / CHARMM-TIP3P / 150 mM NaCl
+; Duration: 500 ps (250,000 steps × 2 fs)
+; Ensemble: Isothermal-isobaric (NPT)
+;
+; PrP DENSITY EQUILIBRATION:
+; With ~1600 protein atoms and ~8000–15,000 water molecules (depending
+; on box size), the system density should converge to ~1010–1020 kg/m³
+; (slightly above pure water due to the protein contribution).
+;
+; VALIDATION CHECKLIST FOR PrP NPT:
+;   □ Temperature stable at 310 ± 3 K (gmx energy → Temperature)
+;   □ Pressure fluctuates around 1 bar (wide fluctuations normal)
+;   □ Density converges to ~1010–1020 kg/m³ (gmx energy → Density)
+;   □ Box volume stabilizes (gmx energy → Volume)
+;   □ Protein RMSD < 0.15 nm from starting structure (restrained)
+
+define              = -DPOSRES
+integrator          = md
+dt                  = 0.002
+nsteps              = 80000     ; 100 ps
+continuation        = yes
+
+nstxout-compressed  = 500
+nstenergy           = 500
+nstlog              = 500
+
+cutoff-scheme       = Verlet
+verlet-buffer-tolerance = 0.005
+nstlist             = 20
+pbc                 = xyz
+
+coulombtype         = PME
+rcoulomb            = 1.2
+fourierspacing      = 0.12
+pme-order           = 4
+ewald-rtol          = 1e-5
+
+vdwtype             = cutoff
+vdw-modifier        = force-switch
+rvdw                = 1.2
+rvdw-switch         = 1.0
+DispCorr            = no
+
+tcoupl              = V-rescale
+tc-grps             = Protein Non-Protein
+tau_t               = 0.1   0.1
+ref_t               = 310   310
+
+pcoupl              = C-rescale
+pcoupltype          = isotropic
+tau_p               = 5.0
+ref_p               = 1.0
+compressibility     = 4.5e-5
+refcoord-scaling    = com
+
+gen_vel             = no
+
+constraint_algorithm = LINCS
+constraints         = h-bonds
+lincs_iter          = 1
+lincs_order         = 4

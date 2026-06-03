@@ -1,0 +1,119 @@
+mutation,max_agg,delta_agg,effect
+I182D,0,-6.321,Reduced Amyloidogenicity
+I182E,0,-6.321,Reduced Amyloidogenicity
+I182K,0,-6.321,Reduced Amyloidogenicity
+I182P,0,-6.321,Reduced Amyloidogenicity
+I182R,0,-6.321,Reduced Amyloidogenicity
+I184D,0,-6.321,Reduced Amyloidogenicity
+I184E,0,-6.321,Reduced Amyloidogenicity
+I184K,0,-6.321,Reduced Amyloidogenicity
+I184P,0,-6.321,Reduced Amyloidogenicity
+I184R,0,-6.321,Reduced Amyloidogenicity
+K185P,0,-6.321,Reduced Amyloidogenicity
+N181D,0,-6.321,Reduced Amyloidogenicity
+N181E,0,-6.321,Reduced Amyloidogenicity
+N181P,0,-6.321,Reduced Amyloidogenicity
+N181R,0,-6.321,Reduced Amyloidogenicity
+T183D,0,-6.321,Reduced Amyloidogenicity
+T183E,0,-6.321,Reduced Amyloidogenicity
+T183K,0,-6.321,Reduced Amyloidogenicity
+T183P,0,-6.321,Reduced Amyloidogenicity
+T183R,0,-6.321,Reduced Amyloidogenicity
+V180D,0,-6.321,Reduced Amyloidogenicity
+V180E,0,-6.321,Reduced Amyloidogenicity
+V180K,0,-6.321,Reduced Amyloidogenicity
+V180P,0,-6.321,Reduced Amyloidogenicity
+V180R,0,-6.321,Reduced Amyloidogenicity
+N181K,0.199,-6.122,Reduced Amyloidogenicity
+D178K,0.5,-5.821,Reduced Amyloidogenicity
+D178R,0.5,-5.821,Reduced Amyloidogenicity
+K185D,0.535,-5.786,Reduced Amyloidogenicity
+K185E,0.536,-5.785,Reduced Amyloidogenicity
+D178P,1.387,-4.933999999999999,Reduced Amyloidogenicity
+C179D,2.407,-3.9139999999999997,Reduced Amyloidogenicity
+C179E,2.421,-3.9,Reduced Amyloidogenicity
+C179R,2.43,-3.8909999999999996,Reduced Amyloidogenicity
+C179K,2.431,-3.8899999999999997,Reduced Amyloidogenicity
+Q186D,2.934,-3.3869999999999996,Reduced Amyloidogenicity
+Q186E,2.935,-3.3859999999999997,Reduced Amyloidogenicity
+Q186R,3.228,-3.0929999999999995,Reduced Amyloidogenicity
+Q186K,3.229,-3.0919999999999996,Reduced Amyloidogenicity
+C179P,5.562,-0.7589999999999995,Reduced Amyloidogenicity
+H177K,5.736,-0.585,Reduced Amyloidogenicity
+H177R,5.739,-0.5819999999999999,Reduced Amyloidogenicity
+H177E,5.748,-0.5729999999999995,Reduced Amyloidogenicity
+H177D,5.756,-0.5649999999999995,Reduced Amyloidogenicity
+V176D,6.257,-0.06400000000000006,Reduced Amyloidogenicity
+V176P,6.296,-0.024999999999999467,Reduced Amyloidogenicity
+H187K,6.306,-0.01499999999999968,Reduced Amyloidogenicity
+V176K,6.308,-0.0129999999999999,Reduced Amyloidogenicity
+V176R,6.308,-0.0129999999999999,Reduced Amyloidogenicity
+H187R,6.311,-0.009999999999999787,Reduced Amyloidogenicity
+T188K,6.315,-0.005999999999999339,Reduced Amyloidogenicity
+T188R,6.315,-0.005999999999999339,Reduced Amyloidogenicity
+T188P,6.316,-0.004999999999999893,Reduced Amyloidogenicity
+V189K,6.319,-0.0019999999999997797,Reduced Amyloidogenicity
+V189R,6.319,-0.0019999999999997797,Reduced Amyloidogenicity
+F175K,6.321,0,Neutral
+F175P,6.321,0,Neutral
+F175R,6.321,0,Neutral
+N171K,6.321,0,Neutral
+N171P,6.321,0,Neutral
+N171R,6.321,0,Neutral
+N173K,6.321,0,Neutral
+N173P,6.321,0,Neutral
+N173R,6.321,0,Neutral
+N174K,6.321,0,Neutral
+N174P,6.321,0,Neutral
+N174R,6.321,0,Neutral
+Q172K,6.321,0,Neutral
+Q172P,6.321,0,Neutral
+Q172R,6.321,0,Neutral
+S170K,6.321,0,Neutral
+S170P,6.321,0,Neutral
+S170R,6.321,0,Neutral
+T190K,6.321,0,Neutral
+T190P,6.321,0,Neutral
+T190R,6.321,0,Neutral
+T191K,6.321,0,Neutral
+T191P,6.321,0,Neutral
+T191R,6.321,0,Neutral
+T192K,6.321,0,Neutral
+T192P,6.321,0,Neutral
+T192R,6.321,0,Neutral
+T193K,6.321,0,Neutral
+T193P,6.321,0,Neutral
+T193R,6.321,0,Neutral
+V189P,6.321,0,Neutral
+D178E,6.322,0.001000000000000334,Increased Amyloidogenicity
+H187P,6.322,0.001000000000000334,Increased Amyloidogenicity
+K185R,6.323,0.002000000000000668,Increased Amyloidogenicity
+Q186P,6.332,0.01100000000000012,Increased Amyloidogenicity
+V176E,6.338,0.017000000000000348,Increased Amyloidogenicity
+F175D,6.346,0.025000000000000355,Increased Amyloidogenicity
+F175E,6.346,0.025000000000000355,Increased Amyloidogenicity
+N171D,6.346,0.025000000000000355,Increased Amyloidogenicity
+N171E,6.346,0.025000000000000355,Increased Amyloidogenicity
+N173D,6.346,0.025000000000000355,Increased Amyloidogenicity
+N173E,6.346,0.025000000000000355,Increased Amyloidogenicity
+N174D,6.346,0.025000000000000355,Increased Amyloidogenicity
+N174E,6.346,0.025000000000000355,Increased Amyloidogenicity
+Q172D,6.346,0.025000000000000355,Increased Amyloidogenicity
+Q172E,6.346,0.025000000000000355,Increased Amyloidogenicity
+S170D,6.346,0.025000000000000355,Increased Amyloidogenicity
+S170E,6.346,0.025000000000000355,Increased Amyloidogenicity
+T190D,6.346,0.025000000000000355,Increased Amyloidogenicity
+T190E,6.346,0.025000000000000355,Increased Amyloidogenicity
+T191D,6.346,0.025000000000000355,Increased Amyloidogenicity
+T191E,6.346,0.025000000000000355,Increased Amyloidogenicity
+T192D,6.346,0.025000000000000355,Increased Amyloidogenicity
+T192E,6.346,0.025000000000000355,Increased Amyloidogenicity
+T193D,6.346,0.025000000000000355,Increased Amyloidogenicity
+T193E,6.346,0.025000000000000355,Increased Amyloidogenicity
+H187D,6.347,0.02600000000000069,Increased Amyloidogenicity
+T188D,6.352,0.031000000000000583,Increased Amyloidogenicity
+V189D,6.353,0.03200000000000003,Increased Amyloidogenicity
+V189E,6.353,0.03200000000000003,Increased Amyloidogenicity
+T188E,6.355,0.034000000000000696,Increased Amyloidogenicity
+H187E,6.36,0.03900000000000059,Increased Amyloidogenicity
+H177P,6.384,0.06300000000000061,Increased Amyloidogenicity

@@ -1,0 +1,103 @@
+; md.mdp — Production MD (PrP)
+; ===============================
+; System: Human PrP(125–228), CHARMM36m / CHARMM-TIP3P / 150 mM NaCl
+; Duration: 200 ns (100,000,000 steps × 2 fs)
+; Ensemble: NPT at 310 K, 1 bar
+;
+; ═══════════════════════════════════════════════════════════════════
+; WHY 200 ns FOR PrP vs 500 ns FOR Aβ PEPTIDES
+; ═══════════════════════════════════════════════════════════════════
+;
+; PrP(125–228) is a FOLDED globular protein that samples a relatively
+; narrow conformational basin around its native state under physiological
+; conditions. The scientific questions are fundamentally different:
+;
+; For Aβ42/39 (IDPs):
+;   → "What is the conformational ensemble?" (exploration)
+;   → Requires exhaustive sampling across a flat energy landscape
+;   → 500 ns minimum per replica, ideally microseconds
+;
+; For PrP (folded):
+;   → "How stable is the native fold? Where is it flexible?"
+;   → The protein fluctuates around the native basin
+;   → 200 ns captures local dynamics, loop motions, and breathing modes
+;   → Longer simulations (500 ns+) probe rare partial-unfolding events
+;     relevant to PrP^C → PrP^Sc conversion research
+;
+; WHAT TO EXPECT IN A 200 ns PrP TRAJECTORY:
+;   • RMSD stabilizes at 0.15–0.30 nm from the NMR structure within ~20 ns
+;   • Cα RMSF reveals rigid helices (H2, H3 ≈ 0.05–0.10 nm) vs flexible
+;     loops (β2-α2 loop ≈ 0.15–0.30 nm; this loop is implicated in
+;     species barrier and prion strain specificity)
+;   • The S1-H1-S2 subdomain may show hinge motions relative to H2-H3
+;   • The disulfide bond (Cys179–Cys214) constrains H2-H3 packing and
+;     should maintain ~0.204 nm Sγ–Sγ distance throughout
+;
+; FOR STUDENTS INTERESTED IN PrP^C → PrP^Sc MISFOLDING:
+; Native-state simulations at 310 K will NOT spontaneously produce the
+; PrP^Sc conformation — this is an extremely rare event (τ >> μs) that
+; requires enhanced sampling methods (REMD, metadynamics, or
+; high-temperature unfolding at 400–500 K). A 200 ns simulation reveals
+; the LOCAL dynamics and flexibility patterns that predispose certain
+; regions to conformational change.
+;
+; OUTPUT SIZING: For a ~30,000-atom system at 10 ps intervals:
+;   .xtc ≈ 1.5 GB per 200 ns  |  .edr ≈ 80 MB  |  .log ≈ 20 MB
+;
+; ═══════════════════════════════════════════════════════════════════
+
+integrator          = md
+dt                  = 0.002
+nsteps              = 80000000  ; 100 ns
+continuation        = yes
+
+; --- Output control ---
+nstxout             = 0
+nstvout             = 0
+nstfout             = 0
+nstxout-compressed  = 5000       ; Every 10 ps
+nstenergy           = 5000
+nstlog              = 5000
+compressed-x-grps   = System
+
+; --- Neighbor searching ---
+cutoff-scheme       = Verlet
+verlet-buffer-tolerance = 0.005
+nstlist             = 20
+pbc                 = xyz
+
+; --- Electrostatics (CHARMM36m — do not modify) ---
+coulombtype         = PME
+rcoulomb            = 1.2
+fourierspacing      = 0.12
+pme-order           = 4
+ewald-rtol          = 1e-5
+
+; --- Van der Waals (CHARMM36m — do not modify) ---
+vdwtype             = cutoff
+vdw-modifier        = force-switch
+rvdw                = 1.2
+rvdw-switch         = 1.0
+DispCorr            = no
+
+; --- Temperature coupling ---
+tcoupl              = V-rescale
+tc-grps             = Protein Non-Protein
+tau_t               = 0.1   0.1
+ref_t               = 310   310
+
+; --- Pressure coupling ---
+pcoupl              = Parrinello-Rahman
+pcoupltype          = isotropic
+tau_p               = 5.0
+ref_p               = 1.0
+compressibility     = 4.5e-5
+
+; --- Velocity ---
+gen_vel             = no
+
+; --- Bond constraints ---
+constraint_algorithm = LINCS
+constraints         = h-bonds
+lincs_iter          = 1
+lincs_order         = 4
