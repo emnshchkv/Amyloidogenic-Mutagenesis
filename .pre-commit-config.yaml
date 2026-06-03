@@ -1,0 +1,33 @@
+# Pre-commit hooks. Install once per clone:
+#
+#     pip install pre-commit
+#     pre-commit install
+#     pre-commit run --all-files   # apply to the existing tree in one pass
+#
+# - ruff/ruff-format: fixes quote style and import ordering automatically
+#   (the reviewers' "easily fixed with linters" point).
+# - nbstripout: clears notebook outputs before they are committed. This both
+#   fixes the "broken .ipynb" rendering (GitHub chokes on notebooks carrying
+#   megabytes of base64-embedded output images) and removes most notebook bloat.
+#   Figures belong in each step's figures/ directory, not inside the .ipynb.
+
+repos:
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.6.9
+    hooks:
+      - id: ruff
+        args: [--fix]
+      - id: ruff-format
+
+  - repo: https://github.com/kynan/nbstripout
+    rev: 0.7.1
+    hooks:
+      - id: nbstripout
+
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.6.0
+    hooks:
+      - id: check-added-large-files
+        args: [--maxkb=2000]   # block accidental commits of heavy binaries
+      - id: end-of-file-fixer
+      - id: trailing-whitespace

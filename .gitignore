@@ -205,3 +205,34 @@ cython_debug/
 marimo/_static/
 marimo/_lsp/
 __marimo__/
+# ============================================================
+# Heavy data — fetched via scripts/download_data.py, never committed
+# (append this block to the existing .gitignore)
+# ============================================================
+
+# CHARMM36m / CGenFF force field (standard external asset, ~15 MB)
+**/charmm36-feb2026_cgenff-5.0.ff/
+**/charmm36*.tgz
+
+# MD trajectories, structures, checkpoints
+*.xtc
+*.trr
+*.tpr
+*.gro
+*.cpt
+*.edr
+*.log
+*.npz
+# Keep starting PDBs small enough to track? If not, uncomment:
+# *.pdb
+
+# Trajectory animations
+*.gif
+
+# PASTA / per-variant raw prediction dumps (regenerable, many small files)
+**/prp_pasta20/
+**/prp_tango/
+
+# Large rasterised figures over ~1 MB tend to be PCA/contact maps — keep the
+# canonical ones in figures/, but never the multi-MB intermediates:
+# (review case by case; this is a safety net, not a blanket rule)

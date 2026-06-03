@@ -1,0 +1,9 @@
+numpy>=2.0
+pandas>=3.0
+matplotlib>=3.10
+seaborn>=0.13
+MDAnalysis>=2.10
+scipy>=1.17
+statsmodels>=0.14
+pydssp>=0.6.0
+tqdm>=4.67

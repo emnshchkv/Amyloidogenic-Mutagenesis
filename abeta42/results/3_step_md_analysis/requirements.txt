@@ -1,7 +1,0 @@
-numpy>=2.0
-matplotlib>=3.10
-MDAnalysis>=2.10
-scipy>=1.17
-seaborn>=0.13
-pandas>=3.0
-tqdm>=4.67
