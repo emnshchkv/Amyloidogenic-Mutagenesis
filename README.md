@@ -27,7 +27,7 @@ A single computational pipeline — *in silico* saturation mutagenesis → multi
 
 ## Background
 
-Amyloid fibrils form when a polypeptide populates a cross-β architecture stabilised by a steric-zipper backbone hydrogen-bond network. Point substitutions shift the free-energy balance between the soluble ensemble and the aggregation-prone state, which is why a handful of single mutations in Aβ (e.g. the Arctic E22G, Dutch E22Q, Iowa D23N) and in PrP convert a normally clearing peptide into a clinically aggressive one. Sequence-based predictors (TANGO, PASTA 2.0, WALTZ, AmyloGram, AGGRESCAN, AmyPred-FRL, Cross-β) each encode a different physical proxy for that balance — β-sheet propensity, pairing free energy, hydrophobic-pattern matching — but no single tool is reliable alone, and a prediction of "more aggregation-prone" is not the same as an observed structural change.
+Amyloid fibrils form when a polypeptide populates a cross-β architecture stabilised by a steric-zipper backbone hydrogen-bond network. Point substitutions shift the free-energy balance between the soluble ensemble and the aggregation-prone state, which is why a handful of single mutations in Aβ (e.g. the Arctic E22G, Dutch E22Q, Iowa D23N) and in PrP convert a normally clearing peptide into a clinically aggressive one. Sequence-based predictors (TANGO, PASTA 2.0, WALTZ, AmyloGram, AGGRESCAN, AmyPred-FRL, APPNN, Cross-β) each encode a different physical proxy for that balance — β-sheet propensity, pairing free energy, hydrophobic-pattern matching — but no single tool is reliable alone, and a prediction of "more aggregation-prone" is not the same as an observed structural change.
 
 This project asks whether the **consensus** of several predictors, used to *prioritise* mutations, picks out substitutions that actually perturb the fold under explicit-solvent molecular dynamics.
 
@@ -51,22 +51,22 @@ The same four-step workflow is applied to every substrate; only the starting str
 
 ## Workflow steps
 
-| Step | What happens | Output |
-|---|---|---|
-| **01 — Mutagenesis** | Enumerate single substitutions (saturation, or restricted to the amyloidogenic core) and write FASTA. | variant FASTA |
+| Step | What happens | Output                            |
+|---|---|-----------------------------------|
+| **01 — Mutagenesis** | Enumerate single substitutions (saturation, or restricted to the amyloidogenic core) and write FASTA. | variant FASTA                     |
 | **02 — Prediction** | Submit variants to the predictor panel; normalise each tool to a within-tool z-score; average into a consensus; rank. | consensus table + ranking figures |
-| **03 — MD run** | Build WT + selected variants, energy-minimise, equilibrate (NVT/NPT), production MD in explicit solvent (CHARMM36m, TIP3P). | trajectories |
-| **04 — MD analysis** | RMSD, RMSF, Rg, DSSP, H-bonds, salt bridges, contact maps, PCA, convergence; WT-vs-mutant comparison. | analysis figures |
+| **03 — MD run** | Build WT + selected variants, energy-minimise, equilibrate (NVT/NPT), production MD in explicit solvent (CHARMM36m, TIP3P). | trajectories + structures         |
+| **04 — MD analysis** | RMSD, RMSF, Rg, DSSP, H-bonds, salt bridges, contact maps, PCA, convergence; WT-vs-mutant comparison. | analysis figures                  |
 
 ## The three subprojects
 
 The substrates were chosen to stress the pipeline on deliberately different structural regimes:
 
-| Subproject | System | Mutated region | Oligomeric state simulated | Selected variants |
-|---|---|---|---|---|
-| [`abeta42/`](abeta42/) | Aβ42 | full sequence (saturation, filtered to known variants) | pentameric β-sheet assembly | F20L, G33R, H14R |
-| [`abeta39/`](abeta39/) | Aβ39 | amyloidogenic regions | monomer **and** tetramer | G25D (+ WT) |
-| [`prp/`](prp/) | PrP | C-terminal core, residues 170–195 | monomer (C-terminal core 23–231) | V180R |
+| Subproject | System | Mutated region | Oligomeric state simulated | Selected variants     |
+|---|---|---|---|-----------------------|
+| [`abeta42/`](abeta42/) | Aβ42 | full sequence (saturation, filtered to known variants) | pentameric β-sheet assembly | F20L, G33R, H14R + WT |
+| [`abeta39/`](abeta39/) | Aβ39 | amyloidogenic regions | monomer **and** tetramer | G25D + WT             |
+| [`prp/`](prp/) | PrP | C-terminal core, residues 170–195 | monomer (C-terminal core 23–231) | V180R + WT            |
 
 Each subproject directory contains its own README with the substrate-specific rationale and per-step documentation.
 
@@ -74,13 +74,13 @@ Each subproject directory contains its own README with the substrate-specific ra
 
 **Software**
 
-| Component | Version | Used in |
-|---|---|---|
-| GROMACS | 2024.3 (CUDA 12.8) | steps 03–04 |
-| CHARMM36m / CGenFF | charmm36-feb2026, cgenff-5.0 | step 03 |
-| Python | ≥ 3.10 | steps 01, 02, 04 |
-| R | ≥ 4.2 | step 02 (PrP) |
-| Predictors | TANGO, PASTA 2.0, WALTZ, AmyloGram, AGGRESCAN, AmyPred-FRL, Cross-β | step 02 |
+| Component | Version                                                                    | Used in |
+|---|----------------------------------------------------------------------------|---|
+| GROMACS | 2024.3 (CUDA 12.8)                                                         | steps 03–04 |
+| CHARMM36m / CGenFF | charmm36-feb2026, cgenff-5.0                                               | step 03 |
+| Python | ≥ 3.10                                                                     | steps 01, 02, 04 |
+| R | ≥ 4.2                                                                      | step 02 (PrP) |
+| Predictors | TANGO, PASTA 2.0, WALTZ, AmyloGram, AGGRESCAN, AmyPred-FRL, APPNN, Cross-β | step 02 |
 
 Exact Python dependencies are pinned in [`requirements.txt`](requirements.txt).
 
@@ -143,4 +143,24 @@ The CHARMM36m force field is a standard external asset; the script can also fetc
 The pipeline robustly recovered mutations with distinct, protein‑class‑specific effects. For intrinsically disordered proteins (IDP)/amyloids assemblies like Aβ, effective β-breakers must destabilise oligomeric interfaces. While, for natively folded proteins such as PrP, the most effective mutations stabilize the native fold, raising the kinetic barrier to conversion. Our two‑stage consensus pipeline successfully identifies candidates in both systems, but downstream validation must be tailored to the protein class.
 ## References
 
-_Numbered list — predictor papers (TANGO, PASTA 2.0, WALTZ, AmyloGram, AGGRESCAN, AmyPred-FRL, Cross-β), CHARMM36m, GROMACS, MDAnalysis, and the clinical-mutation sources (UniProt variant records)._
+1. Fernandez-Escamilla, A. M., Rousseau, F., Schymkowitz, J., & Serrano, L. (2004). Prediction of sequence-dependent and mutational effects on the aggregation of peptides and proteins. Nature Biotechnology, 22(10), 1302–1306.
+
+2. Walsh, I., Seno, F., Tosatto, S. C., & Trovato, A. (2014). PASTA 2.0: an improved server for protein aggregation prediction. Nucleic Acids Research, 42(W1), W301–W307.
+
+3. Maurer-Stroh, S., Debulpaep, M., Kuemmerer, N., de Groot, N. S., Martins, I. C., Rousseau, F., ... & Schymkowitz, J. (2010). Exploring the sequence determinants of amyloid structure using position-specific scoring matrices. Nature Methods, 7(3), 237–242.
+
+4. Burdukiewicz, M., Sobczyk, P., Rödiger, S., Duda-Madej, A., Mackiewicz, P., & Kotulska, M. (2017). Amyloidogenic motifs revealed by n-gram analysis. Scientific Reports, 7(1), 12961.
+
+5. Conchillo-Solé, O., de Groot, N. S., Avilés, F. X., Vendrell, J., Daura, X., & Ventura, S. (2007). AGGRESCAN: a server for the prediction and evaluation of “hot spots” of aggregation in polypeptides. BMC Bioinformatics, 8, 1–17.
+
+6. Família, C., Dennison, S. R., Quintas, A., & Phoenix, D. A. (2015). Prediction of Peptide and Protein Propensity for Amyloid Formation. PloS one, 10(8), e0134679.
+
+7. Charoenkwan, P., Ahmed, S., Nantasenamat, C., Quinn, J. M., Moni, M. A., Lio’, P., & Shoombuatong, W. (2022). AMYPred-FRL is a novel approach for accurate prediction of amyloid proteins by using feature representation learning. Scientific Reports, 12(1), 7697.
+
+8. Gonay, V., Dunne, M. P., Caceres-Delpiano, J., & Kajava, A. V. (2025). Developing machine-learning-based amyloidogenicity predictors with Cross-Beta DB. Alzheimer's & dementia : the journal of the Alzheimer's Association, 21(2), e14510.
+
+9. Huang, J., Rauscher, S., Nawrocki, G., Ran, T., Feig, M., de Groot, B. L., ... & MacKerell, A. D. (2017). CHARMM36m: an improved force field for folded and intrinsically disordered proteins. Nature Methods, 14(1), 71–73.
+
+10. Abraham, M. J., Murtola, T., Schulz, R., Páll, S., Smith, J. C., Hess, B., & Lindahl, E. (2015). GROMACS: High performance molecular simulations through multi-level parallelism from laptops to supercomputers. SoftwareX, 1–2, 19–25.
+
+11. Michaud-Agrawal, N., Denning, E. J., Woolf, T. B., & Beckstein, O. (2011). MDAnalysis: A toolkit for the analysis of molecular dynamics simulations. Journal of Computational Chemistry, 32(10), 2319–2327.
