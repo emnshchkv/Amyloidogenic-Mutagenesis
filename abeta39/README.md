@@ -1,4 +1,4 @@
-# Amyloidogenic Mutagenesis and Structural Dynamics of Aβ39
+# Amyloid beta-39 (Aβ39) Study
 
 Author: Sergey Ilin
 Date: 28.05.2026
@@ -7,16 +7,11 @@ This repository contains the complete computational workflow for Aβ39 for the s
 
 The pipeline comprises systematic mutagenesis of Aβ39, consensus‑based aggregation propensity prediction, and all‑atom molecular dynamics simulations of wild‑type and selected mutant structures (monomers and tetramers).
 
-## Repository Structure
+## Pipeline Overview
 
-- `Mutagenesis_and_Predictions/` – scripts for mutant generation and aggregation propensity assessment
-- `MD/` – GROMACS protocols and automation for molecular dynamics simulations
-- `results/` – processed trajectories and Jupyter notebooks for data analysis
-- `images/` – final figures
-- `gifs/` – molecular dynamics trajectory animations
-- `requirements.txt` – Python dependencies
+![ab39 graphical abstract](images/ab39_abstract.png)
 
-## 1. Environment Setup
+## 0. Environment Setup
 
 **System requirements:** GROMACS 2024.3 compiled with CUDA 12.8 support (GPU acceleration required), Python ≥3.10, CUDA Toolkit 12.8.
 
@@ -29,7 +24,7 @@ Install the required Python packages: `pip install -r requirements.txt`.
 
 Ensure that the `gmx` executable is available in your `$PATH`.
 
-## 2. Mutant Generation and Aggregation Prediction
+## 1-2. Mutant Generation and Aggregation Prediction
 
 Navigate to the prediction directory: `cd Mutagenesis_and_Predictions/scripts`. Execute the following scripts sequentially:
 
