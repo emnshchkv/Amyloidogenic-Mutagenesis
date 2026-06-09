@@ -1,6 +1,4 @@
-Repository for the prediction and prioritization of mutations that influence the amyloidogenic properties of Aβ and PrP. Project conducted at the Bioinformatics Institute, 2026.
-
-# Prion Protein (PrP) Mutant MD Study
+# Prion Protein (PrP) Study
 
 Computational study of PrP (Prion Protein) point mutations using amyloidogenicity prediction tools and all-atom molecular dynamics simulations. A targeted library of 118 mutations within the critical amyloidogenic region (residues 170–195) was generated. The top mutation — **V180R** — was selected based on consensus ranking across five predictors and simulated to characterise its structural effects and stabilizing potential relative to the wild-type (WT).
 
@@ -8,37 +6,29 @@ Computational study of PrP (Prion Protein) point mutations using amyloidogenicit
 
 ## Pipeline Overview
 
-```text
-Five predictors                      GROMACS MD
-(PASTA 2.0, TANGO, APPNN,      →    WT + V180R mutant       →    Trajectory analysis
-AmyloGram, AGGRESCAN)                                            & WT comparison
-          ↓
-  Consensus ranking
-→ select top disruptor
-    for simulation
-```
+![prp graphical abstract](images/prp_abstract.png)
 
 ### Step 1 — In Silico Amyloid Mutagenesis
 A complete library of 118 single-point substitution variants within the consensus amyloidogenic region (170–195 aa) was generated. The initial wild-type sequences were appropriately trimmed to isolate the structured C-terminal core (residues 23–231), providing the structural basis for all downstream prediction tools (Step 1).
 
-→ Full documentation & scripts: results/01_mutagenesis/
+→ Full documentation & scripts: 01_mutagenesis/
 
 ### Step 2 — Amyloidogenicity Prediction
 All 118 point-substitution variants were submitted to five distinct prediction algorithms. Each tool computes a different proxy for aggregation propensity (e.g., minimum free energy, cross-beta aggregation peak, sequence-based probability). The results were aligned and Z-standardized to produce an Integrative Score. V180R emerged as the strongest predicted amyloid breaker and was selected for molecular dynamics simulations.
 
 ![Consensus ranking of all 118 PrP variants](images/00_consensus_waterfall.png)
 
-→ Full documentation & scripts: results/02_amyloid_prediction/
+→ Full documentation & scripts: 02_prediction/
 
 ### Step 3 — Molecular Dynamics Simulations
 All-atom molecular dynamics simulations were performed using GROMACS to evaluate the physical consequences of the mutation. Both the Wild-Type PrP and the V180R mutant were simulated under identical conditions (CHARMM36m force field, TIP3P water, physiological pH and salt concentrations) to ensure comparability.
 
-→ Full documentation & scripts: results/03_md_run/
+→ Full documentation & scripts: 03_md_run/
 
 ### Step 4 — Trajectory Analysis
 The resulting MD trajectories were analyzed to assess structural stability and local dynamics. Using MDAnalysis in Python, two comprehensive Jupyter notebooks were developed (for WT and V180R) to calculate structural observables (RMSD, RMSF, Radius of Gyration), track secondary structure evolution (DSSP), and map intramolecular interactions (hydrogen bond networks, H2-H3 interfaces, and disulfide bridges).
 
-→ Full documentation & notebooks: results/04_md_analysis/
+→ Full documentation & notebooks: 04_md_analysis/
 
 ## Results and Summary
 
