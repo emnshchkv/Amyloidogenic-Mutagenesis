@@ -1,5 +1,3 @@
-Repository for the prediction and prioritization of mutations that influence the amyloidogenic properties of Aβ and PrP. Project conducted at the Bioinformatics Institute, 2026.
-
 # Amyloid beta-42 Study
 
 Computational study of Aβ42 (amyloid beta-42) point mutations using amyloidogenicity prediction tools and all-atom molecular dynamics simulations of pentameric assemblies. Three mutations — **F20L**, **G33R**, and **H14R** — were selected based on consensus ranking across six predictors and simulated for ~160 ns each to characterise their structural effects relative to the wild-type.
@@ -8,35 +6,31 @@ Computational study of Aβ42 (amyloid beta-42) point mutations using amyloidogen
 
 ## Pipeline Overview
 
-```
-      Six predictors                      GROMACS MD (160 ns)
-    (TANGO, PASTA, WALTZ,          →    WT + 3 selected mutants    →    Trajectory analysis
-Cross-beta, AmyPred, AmyloGram)                pentamers                  & WT comparison
-```
+![ab42 graphical abstract](images/ab42_abstract.png)
 
-### Step 0 — In Silico Amyloid beta-42 Mutagenesis
+### Step 1 — In Silico Amyloid beta-42 Mutagenesis
 
-A library of 465 Aβ42 single-point substitution variants was generated. These in silico mutations were then cross-referenced with the known database of all described amyloid beta mutations obtained from UniProt. Only those mutations that are present in the database were selected for all downstream prediction tools (Step 1) and selects the mutation targets for MD simulation (Steps 2–3).
+A library of 465 Aβ42 single-point substitution variants was generated. These in silico mutations were then cross-referenced with the known database of all described amyloid beta mutations obtained from UniProt. Only those mutations that are present in the database were selected for all downstream prediction tools (Step 2) and selects the mutation targets for MD simulation (Steps 3-4).
 
-→ Full documentation: [`0_step_mutagenesis/`](0_step_mutagenesis/)
+→ Full documentation: [`01_mutagenesis/`](01_mutagenesis/)
 
-### Step 1 — Amyloidogenicity Prediction
+### Step 2 — Amyloidogenicity Prediction
 
 65 Aβ42 point-substitution variants were submitted to six prediction tools (`TANGO`, `PASTA`, `AmyPred-FRL`, `Cross-beta`, `AmyPred`, `AmyloGram`). Each tool computes a different proxy for aggregation propensity. Tool outputs were normalised and combined into a **consensus z-score ranking** to identify mutations that most robustly decrease or increase aggregation across tools.
 
-→ Full documentation: [`1_step_prediction_tools_analysis/`](1_step_prediction_tools_analysis/)
+→ Full documentation: [`02_prediction/`](02_prediction/)
 
-### Step 2 — MD Simulations
+### Step 3 — MD Simulations
 
 *Wild-type* Aβ42 and the 3 selected mutants (*F20L*, *G33R*, *H14R*) were built as pentameric β-sheet assemblies using AlphaFold3. Each system was energy-minimised, equilibrated, and simulated for ~160 ns in explicit solvent with the CHARMM36m force field in GROMACS.
 
-→ Full documentation: [`2_step_md_run/`](2_step_md_run/)
+→ Full documentation: [`03_md_run/`](03_md_run/)
 
-### Step 3 — Trajectory Analysis
+### Step 4 — Trajectory Analysis
 
 Two notebooks process each trajectory: one characterises the mutant in isolation (RMSD, RMSF, Rg, DSSP, H-bonds, PCA, Ramachandran, convergence) and the other one performs a direct WT and mutant comparison.
 
-→ Full documentation: [`3_step_md_analysis/`](3_step_md_analysis/)
+→ Full documentation: [`04_md_analysis/`](04_md_analysis/)
 
 ---
 
