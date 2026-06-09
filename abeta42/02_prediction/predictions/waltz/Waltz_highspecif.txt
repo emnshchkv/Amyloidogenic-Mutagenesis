@@ -1,0 +1,194 @@
+>A2T_Icelandic_Abeta42
+Positions	Sequence	Average score per residue
+16-21	KLVFFA	97.993311
+>G9V_Abeta42
+Positions	Sequence	Average score per residue
+16-21	KLVFFA	97.993311
+>L17V_Abeta42
+Positions	Sequence	Average score per residue
+16-21	KVVFFA	97.993311
+>K16N_Abeta42
+Positions	Sequence	Average score per residue
+16-21	NLVFFA	98.662207
+>A2V_Abeta42
+Positions	Sequence	Average score per residue
+16-21	KLVFFA	97.993311
+>D7H_Abeta42
+Positions	Sequence	Average score per residue
+16-21	KLVFFA	97.993311
+>R5L_Abeta42
+Positions	Sequence	Average score per residue
+16-21	KLVFFA	97.993311
+>H6R_Abeta42
+Positions	Sequence	Average score per residue
+16-21	KLVFFA	97.993311
+>D7E_Abeta42
+Positions	Sequence	Average score per residue
+16-21	KLVFFA	97.993311
+>G38V_Abeta42
+Positions	Sequence	Average score per residue
+16-21	KLVFFA	97.993311
+37-42	GVVVIA	97.324415
+>M35V_Abeta42
+Positions	Sequence	Average score per residue
+16-21	KLVFFA	97.993311
+>G9A_Abeta42
+Positions	Sequence	Average score per residue
+16-21	KLVFFA	97.993311
+>I41V_Abeta42
+Positions	Sequence	Average score per residue
+16-21	KLVFFA	97.993311
+>E3Q_Abeta42
+Positions	Sequence	Average score per residue
+16-21	KLVFFA	97.993311
+>I31V_Abeta42
+Positions	Sequence	Average score per residue
+16-21	KLVFFA	97.993311
+>R5Q_Abeta42
+Positions	Sequence	Average score per residue
+16-21	KLVFFA	97.993311
+>E22G_Arctic_Abeta42
+Positions	Sequence	Average score per residue
+16-21	KLVFFA	97.993311
+>E22Q_Dutch_Abeta42
+Positions	Sequence	Average score per residue
+16-21	KLVFFA	97.993311
+>A30V_Abeta42
+Positions	Sequence	Average score per residue
+16-21	KLVFFA	97.993311
+>R5P_Abeta42
+Positions	Sequence	Average score per residue
+16-21	KLVFFA	97.993311
+>A2G_Abeta42
+Positions	Sequence	Average score per residue
+16-21	KLVFFA	97.993311
+>H6Q_Abeta42
+Positions	Sequence	Average score per residue
+16-21	KLVFFA	97.993311
+>E3G_Abeta42
+Positions	Sequence	Average score per residue
+16-21	KLVFFA	97.993311
+>E3K_Abeta42
+Positions	Sequence	Average score per residue
+16-21	KLVFFA	97.993311
+>V36M_Abeta42
+Positions	Sequence	Average score per residue
+16-21	KLVFFA	97.993311
+>H13R_Abeta42
+Positions	Sequence	Average score per residue
+16-21	KLVFFA	97.993311
+>K16R_Abeta42
+Positions	Sequence	Average score per residue
+16-21	RLVFFA	97.324415
+>V24M_Abeta42
+Positions	Sequence	Average score per residue
+16-21	KLVFFA	97.993311
+>H14R_Abeta42
+Positions	Sequence	Average score per residue
+16-21	KLVFFA	97.993311
+>M35L_Abeta42
+Positions	Sequence	Average score per residue
+16-21	KLVFFA	97.993311
+>G38S_Abeta42
+Positions	Sequence	Average score per residue
+16-21	KLVFFA	97.993311
+>A21G_Abeta42
+Positions	Sequence	Average score per residue
+>A42T_Abeta42
+Positions	Sequence	Average score per residue
+16-21	KLVFFA	97.993311
+>G9E_Abeta42
+Positions	Sequence	Average score per residue
+16-21	KLVFFA	97.993311
+>V18M_Abeta42
+Positions	Sequence	Average score per residue
+>F19L_Abeta42
+Positions	Sequence	Average score per residue
+16-21	KLVLFA	98.327759
+>V24G_Abeta42
+Positions	Sequence	Average score per residue
+16-20	KLVFF	97.993311
+>F4I_Abeta42
+Positions	Sequence	Average score per residue
+16-21	KLVFFA	97.993311
+>H13P_Abeta42
+Positions	Sequence	Average score per residue
+16-21	KLVFFA	97.993311
+>V39I_Abeta42
+Positions	Sequence	Average score per residue
+16-21	KLVFFA	97.993311
+>D7N_Abeta42
+Positions	Sequence	Average score per residue
+16-21	KLVFFA	97.993311
+>G38C_Abeta42
+Positions	Sequence	Average score per residue
+16-21	KLVFFA	97.993311
+>V24C_Abeta42
+Positions	Sequence	Average score per residue
+16-21	KLVFFA	97.993311
+>Q15E_Abeta42
+Positions	Sequence	Average score per residue
+16-21	KLVFFA	97.993311
+>V24A_Abeta42
+Positions	Sequence	Average score per residue
+16-21	KLVFFA	97.993311
+>F20L_Abeta42
+Positions	Sequence	Average score per residue
+>G25S_Abeta42
+Positions	Sequence	Average score per residue
+16-21	KLVFFA	97.993311
+>G33R_Abeta42
+Positions	Sequence	Average score per residue
+16-21	KLVFFA	97.993311
+>A42V_Abeta42
+Positions	Sequence	Average score per residue
+16-21	KLVFFA	97.993311
+>H13L_Abeta42
+Positions	Sequence	Average score per residue
+16-21	KLVFFA	97.993311
+>I31M_Abeta42
+Positions	Sequence	Average score per residue
+16-21	KLVFFA	97.993311
+>R5G_Abeta42
+Positions	Sequence	Average score per residue
+16-21	KLVFFA	97.993311
+>L34V_Abeta42
+Positions	Sequence	Average score per residue
+16-21	KLVFFA	97.993311
+>A21T_Abeta42
+Positions	Sequence	Average score per residue
+16-22	KLVFFTE	97.658863
+>E22K_Abeta42
+Positions	Sequence	Average score per residue
+16-21	KLVFFA	97.993311
+>E22D_Abeta42
+Positions	Sequence	Average score per residue
+>V12I_Abeta42
+Positions	Sequence	Average score per residue
+16-21	KLVFFA	97.993311
+>I32V_Abeta42
+Positions	Sequence	Average score per residue
+16-21	KLVFFA	97.993311
+>A21S_Abeta42
+Positions	Sequence	Average score per residue
+>K28R_Abeta42
+Positions	Sequence	Average score per residue
+16-21	KLVFFA	97.993311
+>E11K_Abeta42
+Positions	Sequence	Average score per residue
+16-21	KLVFFA	97.993311
+>Wildtype_Abeta_42
+Positions	Sequence	Average score per residue
+16-21	KLVFFA	97.993311
+>G25D_Abeta42
+Positions	Sequence	Average score per residue
+16-21	KLVFFA	97.993311
+>Y10F_Abeta42
+Positions	Sequence	Average score per residue
+16-21	KLVFFA	97.993311
+>D23N_Iowa_Abeta42
+Positions	Sequence	Average score per residue
+16-23	KLVFFAEN	97.993311
+>M35T_Abeta42
+Positions	Sequence	Average score per residue
+16-21	KLVFFA	97.993311

@@ -1,0 +1,31 @@
+# Ruff configuration — addresses the reviewers' "inconsistent quote style" and
+# "non-PEP-8-compliant imports" comments. Run once to auto-fix the whole tree:
+#
+#     pip install ruff
+#     ruff check --fix .      # fixes import order (I) and many lint issues
+#     ruff format .           # normalises quotes and layout
+#
+# After this, the .pre-commit hook keeps it consistent on every commit.
+
+line-length = 100
+target-version = "py310"
+
+[lint]
+select = [
+    "E",    # pycodestyle errors
+    "F",    # pyflakes
+    "I",    # isort — enforces PEP 8 import ordering/grouping
+    "UP",   # pyupgrade
+    "B",    # flake8-bugbear
+    "Q",    # flake8-quotes — quote-style consistency
+]
+ignore = [
+    "E501",  # line length handled by the formatter, not the linter
+]
+
+[lint.isort]
+known-first-party = ["abeta42", "abeta39", "prp"]
+
+[format]
+quote-style = "double"   # pick one project-wide; double matches PEP 8 examples
+indent-style = "space"

@@ -1,0 +1,57 @@
+; nvt.mdp — NVT Equilibration (Aβ39)
+; ====================================
+; System: Aβ39 monomer, CHARMM36m / CHARMM-TIP3P / 150 mM NaCl
+; Duration: 100 ps
+;
+; Aβ39-SPECIFIC NOTES:
+; • The same three histidine residues (His6, His13, His14) are present
+;   as in Aβ42 — use identical protonation state choices (HSE for all).
+; • Aβ39 has a net charge of approximately -3 at pH 7.4 (depending on
+;   His protonation), similar to Aβ42 which is -3 to -4. The C-terminal
+;   truncation removes a hydrophobic tail but does not significantly
+;   alter the overall charge.
+; • Box construction should use -d 1.5 (dodecahedron) as for Aβ42,
+;   since Aβ39 is equally disordered and can adopt extended conformations.
+
+define              = -DPOSRES
+integrator          = md
+dt                  = 0.002
+nsteps              = 10000      ; 100 ps
+continuation        = no
+
+nstxout-compressed  = 500
+nstenergy           = 500
+nstlog              = 500
+
+cutoff-scheme       = Verlet
+verlet-buffer-tolerance = 0.005
+nstlist             = 20
+pbc                 = xyz
+
+coulombtype         = PME
+rcoulomb            = 1.2
+fourierspacing      = 0.12
+pme-order           = 4
+ewald-rtol          = 1e-5
+
+vdwtype             = cutoff
+vdw-modifier        = force-switch
+rvdw                = 1.2
+rvdw-switch         = 1.0
+DispCorr            = no
+
+tcoupl              = V-rescale
+tc-grps             = Protein Non-Protein
+tau_t               = 0.1   0.1
+ref_t               = 310   310
+
+pcoupl              = no
+
+gen_vel             = yes
+gen_temp            = 310
+gen_seed            = -1
+
+constraint_algorithm = LINCS
+constraints         = h-bonds
+lincs_iter          = 1
+lincs_order         = 4

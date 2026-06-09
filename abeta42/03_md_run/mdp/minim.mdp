@@ -1,0 +1,48 @@
+; minim.mdp — Energy Minimization (Aβ42)
+; ========================================
+; Purpose: Remove steric clashes and bad contacts introduced during
+; solvation and ion placement. Steepest descent is used because it is
+; unconditionally convergent (always moves downhill) and requires no
+; second derivatives or line search — ideal for the rough energy
+; landscape of a freshly built system.
+;
+; System: Aβ42 monomer in CHARMM36m / CHARMM-TIP3P / 150 mM NaCl
+; Expected runtime: < 5 minutes
+; Success criterion: Fmax < 500 kJ/mol/nm (printed with -v flag)
+
+; --- Algorithm ---
+integrator          = steep       ; Steepest descent minimizer
+emtol               = 500.0      ; Convergence criterion: max force (kJ/mol/nm)
+                                  ; 500 is standard; ensures no atom has a force
+                                  ; large enough to cause instability at dt=2fs
+emstep              = 0.01       ; Initial step size in nm (0.01 = 0.1 Å)
+nsteps              = 10000      ; Maximum iterations (usually converges in <5000)
+
+; --- Neighbor searching ---
+cutoff-scheme       = Verlet     ; Buffered pair list with automatic rlist tuning
+verlet-buffer-tolerance = 0.005
+nstlist             = 1          ; Rebuild every step during EM (atoms move far)
+pbc                 = xyz        ; Full 3D periodic boundary conditions
+
+; --- Electrostatics (CHARMM36m mandatory) ---
+; PME splits the Coulomb sum: direct space within rcoulomb (1.2 nm),
+; reciprocal space via FFT on a grid with spacing ~0.12 nm.
+; pme-order=4 uses cubic B-spline interpolation for charge assignment.
+; ewald-rtol=1e-5 balances real/reciprocal workload for optimal accuracy.
+coulombtype         = PME
+rcoulomb            = 1.2        ; Real-space cutoff (nm) — CHARMM36 standard
+fourierspacing      = 0.12       ; FFT grid spacing (nm)
+pme-order           = 4          ; Interpolation order (cubic)
+ewald-rtol          = 1e-5       ; Ewald direct/reciprocal space tolerance
+
+; --- Van der Waals (CHARMM36m mandatory) ---
+; CHARMM36 uses a force-switch function between rvdw-switch and rvdw
+; to smoothly bring VdW forces to zero. This is PART OF THE FORCE FIELD —
+; changing these values changes the effective potential.
+; DispCorr=no because CHARMM36 was parameterized WITHOUT long-range
+; dispersion correction. Turning it on shifts densities and free energies.
+vdwtype             = cutoff
+vdw-modifier        = force-switch
+rvdw                = 1.2        ; VdW cutoff (nm)
+rvdw-switch         = 1.0        ; Start of switching function (nm)
+DispCorr            = no         ; NO dispersion correction for CHARMM36
