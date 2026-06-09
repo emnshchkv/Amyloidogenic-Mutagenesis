@@ -2,7 +2,7 @@
 
 A single computational pipeline — *in silico* saturation mutagenesis → multi-tool consensus amyloidogenicity ranking → all-atom molecular dynamics of selected variants → trajectory analysis — applied across three amyloidogenic substrates to test whether sequence-based aggregation predictors translate into measurable conformational change.
 
-**Authors:** _Elizaveta Menshikova_ (Aβ42), _Sergey Ilin_ (Aβ39), _Daniil Spirin_ (PrP)
+**Authors:** _Elizaveta Menshchikova_ (Aβ42), _Sergey Ilin_ (Aβ39), _Danil Spirin_ (PrP)
 **Supervisors:** _Sukhanova Xenia_
 **Institution:** Bioinformatics Institute, 2025–2026
 
@@ -45,9 +45,7 @@ To establish and validate a reusable computational pipeline that prioritises amy
 
 ## Methods
 
-![Graphical abstract of the workflow](docs/images/graphical_abstract.png)
-
-> _Replace `docs/images/graphical_abstract.png` with a single figure showing the four steps feeding three substrates. This is the figure the reviewers asked for; it is the one thing that makes the "one project, three systems" structure legible at a glance._
+![Graphical abstract of the workflow](prp/images/graphical_abstract.png)
 
 The same four-step workflow is applied to every substrate; only the starting structure, the mutated region, and the oligomeric state differ.
 
@@ -136,16 +134,13 @@ The CHARMM36m force field is a standard external asset; the script can also fetc
 
 ## Key results
 
-_2–3 sentences per substrate with the headline finding and a link to the subproject. Example:_
-
-- **Aβ42** — Of the three simulated variants, H14R showed progressive Cα RMSD drift after ~140 ns (→ ~13 Å) consistent with continuous remodelling of the pentamer, while F20L was structurally near-neutral. See [`abeta42/`](abeta42/).
-- **Aβ39** — _<headline finding for G25D, monomer vs tetramer>_. See [`abeta39/`](abeta39/).
-- **PrP** — V180R, the top predicted disruptor, _<observed structural effect on the H2–H3 region>_. See [`prp/`](prp/).
+- **Aβ42** — Of the three simulated variants, H14R showed progressive Cα RMSD drift after ~140 ns (→ ~13 Å) consistent with continuous remodelling of the pentamer, while F20L was structurally near-neutral. All mutants formed more hydrogen bonds than WT and avoided the ~30 H-bond loss (~20% of pentamer total) observed late in the WT trajectory. See [`abeta42/`](abeta42/).
+- **Aβ39** — In tetrameric simulations, the top-ranked mutant G25D spent approximately 20% of the trajectory in a disaggregated state (WT remained stable in a mid-tetramer conformation), formed fewer inter-monomer hydrogen bonds (42 vs. 50), and largely failed to establish the critical D23-K28 salt bridge. Monomeric simulations showed that G25D disrupts the formation of a compact central turn around Gly25, as evidenced by Rg profiles, contact maps, and DSSP analysis. See [`abeta39/`](abeta39/).
+- **PrP** — V180R (the top predicted disruptor) RMSF revealed suppressed loop mobility at the Helix 2 entry site in the mutant; fluctuation of residue Ser170 dropped from 3.0 Å in the WT to 1.2 Å in V180R. DSSP tracking confirmed that this rigidification stabilized downstream secondary structure, with the loop helical fraction (residues 165–170) rising from 0.55 (WT) to 0.80 (V180R). See [`prp/`](prp/).
 
 ## Conclusions
 
-_2–4 sentences: did the consensus ranking pick out variants that measurably perturbed the structure under MD? Where did prediction and simulation agree, and where did they diverge? What does that say about using sequence-based consensus to prioritise candidates for the (far more expensive) MD step?_
-
+The pipeline robustly recovered mutations with distinct, protein‑class‑specific effects. For intrinsically disordered proteins (IDP)/amyloids assemblies like Aβ, effective β-breakers must destabilise oligomeric interfaces. While, for natively folded proteins such as PrP, the most effective mutations stabilize the native fold, raising the kinetic barrier to conversion. Our two‑stage consensus pipeline successfully identifies candidates in both systems, but downstream validation must be tailored to the protein class.
 ## References
 
 _Numbered list — predictor papers (TANGO, PASTA 2.0, WALTZ, AmyloGram, AGGRESCAN, AmyPred-FRL, Cross-β), CHARMM36m, GROMACS, MDAnalysis, and the clinical-mutation sources (UniProt variant records)._
